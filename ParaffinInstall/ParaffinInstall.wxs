@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
+  <Product Name='!(loc.ProductName)'
+           Id='*'
+           UpgradeCode='389B736A-BF2B-491D-8DFF-5F82CACBC29E'
+           Language='!(loc.LANGUAGE)'
+           Codepage='1252'
+           Version='3.5.0'
+           Manufacturer='John Robbins/Wintellect'>
+
+    <Package Id='*'
+             Keywords='!(loc.PackageKeywords)'
+             Description="!(loc.PackageDescription)"
+             Comments='!(loc.PackageComments)'
+             Manufacturer='!(loc.PackageManufacturer)'
+             InstallerVersion='100'
+             Languages='!(loc.LANGUAGE)'
+             Compressed='yes'
+             SummaryCodepage='!(loc.CODEPAGE)'
+             InstallPrivileges='limited' />
+
+    <MajorUpgrade DowngradeErrorMessage='!(loc.HighVersionInstalled'/>
+
+    <Media Id='1'
+           Cabinet='Paraffin.cab'
+           EmbedCab='yes'
+           DiskPrompt="CD-ROM #1" />
+    <Property Id='DiskPrompt'
+              Value="!(loc.DiskPrompt)" />
+
+    <!-- Need to have a Visual Studio 2010 version installed. -->
+    <Condition Message="!(loc.VS2010Error)">
+      VS2010INSTALLEDCHECK
+    </Condition>
+    <!-- Need to have the Visual Studio 2010 Projects Directory set
+         or I have no place to install. -->
+    <Condition Message="!(loc.VS2010NotRunError)">
+      VS2010PROJECTSLOCATION
+    </Condition>
+    <!-- Checks to see if any version of VS 2010 is installed. -->
+    <Property Id="VS2010INSTALLEDCHECK">
+      <RegistrySearch Id="VS2010Installed"
+                      Root="HKLM"
+                      Key="SOFTWARE\Microsoft\VisualStudio\SxS\VS7"
+                      Name="10.0"
+                      Type="raw" />
+    </Property>
+
+    <!-- Go find the user's VisualStudioProjectsLocation so I can install
+         my code in there. -->
+    <Property Id="VS2010PROJECTSLOCATION">
+      <RegistrySearch Id="VS2010ProjectsLocation"
+                      Root="HKCU"
+                      Key="SOFTWARE\Microsoft\VisualStudio\10.0"
+                      Name="VisualStudioProjectsLocation"
+                      Type="directory" />
+    </Property>
+
+    <Directory Id='TARGETDIR' Name='SourceDir'>
+      <!-- The source code and binaries go to the user's Visual Studio Projects
+           Locations, as set by the Options Dialog, Projects and Solutions,
+           General settings.-->
+      <Directory Id='VS2010PROJECTSLOCATION' Name='ProjDir'>
+        <Directory Id='INSTALLDIR' Name='!(loc.TargetDir)'/>
+      </Directory>
+    </Directory>
+
+    <Feature Id='Complete' Level='1'>
+      <ComponentGroupRef Id='PARAFFIN_INSTALL'/>
+      <ComponentGroupRef Id='PARAFFIN_SOURCE'/>
+      <ComponentGroupRef Id='PARAFFIN_BINARIES'/>
+    </Feature>
+
+    <Icon Id="WintellectIcon" SourceFile=".\wintellect.ico" />
+
+    <!-- All the Add Remove Program properties. -->
+    <Property Id='ARPCONTACT'>John Robbins</Property>
+    <Property Id='ARPHELPLINK'>mailto://john@wintellect.com</Property>
+    <Property Id='ARPURLINFOABOUT'>http://www.wintellect.com</Property>
+    <Property Id='ARPURLUPDATEINFO'>mailto://john@wintellect.com</Property>
+    <Property Id='ARPSIZE'>44</Property>
+    <Property Id='ARPPRODUCTICON'>WintellectIcon</Property>
+
+    <!-- Set up my license and bitmaps. -->
+    <WixVariable Id="WixUILicenseRtf" Value="License.rtf" />
+    <WixVariable Id='WixUIBannerBmp' Value='.\Bitmaps\bannrbmp.bmp' />
+    <WixVariable Id='WixUIDialogBmp' Value='.\Bitmaps\dlgbmp.bmp' />
+    <!-- The WIXUI_INSTALLDIR property has to be set to the installation
+         directory so the user can change it in the WiXUI_InstallDir
+         sequence.-->
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />    
+    <!-- If the user has document folder redirection enabled and the redirected
+     folder points to a network location, the default WiXUI_InstallDir
+     action is to disallow the install. By setting this property to 1,
+     WiXUI_InstallDir will not validate the directory. -->
+    <Property Id="WIXUI_DONTVALIDATEPATH" Value="1"/>
+
+    <UI>
+      <UIRef Id="WixUI_InstallDir" />
+    </UI>
+
+  </Product>
+</Wix>
+

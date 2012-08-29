@@ -1,0 +1,388 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AliasMultipleSwitches" xml:space="preserve">
+    <value>Only one -alias switch at a time is supported.</value>
+  </data>
+  <data name="ArrayMustBeValid" xml:space="preserve">
+    <value>The array must not be null or of zero length.</value>
+  </data>
+  <data name="CommentProducer" xml:space="preserve">
+    <value>Autogenerated by Paraffin - Wintellect - John Robbins - john@wintellect.com</value>
+  </data>
+  <data name="CommentWarning" xml:space="preserve">
+    <value>Manual changes to this file may cause incorrect behavior.</value>
+  </data>
+  <data name="DirectoryDoesNotExist" xml:space="preserve">
+    <value>The -directory specified path does not exist.</value>
+  </data>
+  <data name="DirectoryMultipleSwitches" xml:space="preserve">
+    <value>Only one -directory switch at a time is supported.</value>
+  </data>
+  <data name="DirectoryRefMultipleSwitches" xml:space="preserve">
+    <value>Only one -dirref switch at a time is supported.</value>
+  </data>
+  <data name="ErrorSwitch" xml:space="preserve">
+    <value>Error on the '{0}' switch.</value>
+  </data>
+  <data name="GroupNameCannotBeEmpty" xml:space="preserve">
+    <value>The -groupname  value cannot be empty.</value>
+  </data>
+  <data name="GroupNameMultipleSwitches" xml:space="preserve">
+    <value>Only one -groupname switch at a time is supported.</value>
+  </data>
+  <data name="GroupNameTooLong" xml:space="preserve">
+    <value>The -groupname  string value cannot be longer than 65 characters.</value>
+  </data>
+  <data name="InteropCallFailed" xml:space="preserve">
+    <value>A call into Windows failed unexpectedly.</value>
+  </data>
+  <data name="InvalidFileNameCountFmt" xml:space="preserve">
+    <value>There appears to be multiple nodes in input .WXS file with the same file name in the same directory: {0}.</value>
+  </data>
+  <data name="InvalidMoldFile" xml:space="preserve">
+    <value>The file '{0}' does contain any elements to insert.</value>
+  </data>
+  <data name="InvalidParameter" xml:space="preserve">
+    <value>An invalid parameter was passed to the method.</value>
+  </data>
+  <data name="MadeWithNewParaffin" xml:space="preserve">
+    <value>The input file was created with a newer version of Paraffin.</value>
+  </data>
+  <data name="MutuallyExclusiveOptions" xml:space="preserve">
+    <value>Update, patch, and creation command line options are mutually excusive.</value>
+  </data>
+  <data name="OutputAlreadySpecified" xml:space="preserve">
+    <value>Only one output or processing file can be specified.</value>
+  </data>
+  <data name="OutputCannotBeEmpty" xml:space="preserve">
+    <value>You must specify the .WXS file to write to or process.</value>
+  </data>
+  <data name="UnknownCommandLineOption" xml:space="preserve">
+    <value>Unknown command line option.</value>
+  </data>
+  <data name="UnknownFileType" xml:space="preserve">
+    <value>The file to process does no appear to have been created with Paraffin. The comment node is missing.</value>
+  </data>
+  <data name="UpdateFileMustExist" xml:space="preserve">
+    <value>The file to update does not exist.</value>
+  </data>
+  <data name="UsageString" xml:space="preserve">
+    <value>Paraffin {0}
+(c) 2007-2012, John Robbins - john@wintellect.com
+A tool for generating Windows Installer XML (WiX) 3.5/3.6 file fragments. 
+
+Usage:
+ Paraffin (-dir &lt;dir&gt; -groupname &lt;value&gt; &lt;file&gt;
+            [-alias &lt;alias&gt; -direXclude &lt;exdir&gt;* | -dirref &lt;DirectoryRef&gt; | 
+             -diskId &lt;number&gt; | -ext &lt;ext&gt;* | -includeFile &lt;file&gt;* | 
+             -norecurse | -regExExclude "regex"* | -norootdirectory | 
+             -verbose | -Win64 &lt;var&gt;])
+          (-update &lt;file&gt; 
+           [-direXclude &lt;exdir&gt;* | -ext &lt;ext&gt;* | -RegExExclude "regex"* | 
+            -ReportIfDifferent | -verbose])
+          (-PatchUpdate &lt;file&gt;
+           [-direXclude &lt;exdir&gt;* | -ext &lt;ext&gt;* | -PatchCreateFiles | 
+            -RegExExclude "regex"* | -ReportIfDifferent | -verbose])
+          (-PatchCreateFiles &lt;file)
+           
+Required parameters to create a new fragment:
+    -dir &lt;dir&gt;             - The directory to recurse and build the fragment 
+                             from. (short: -d)
+    -groupname &lt;value&gt;     - The &lt;ComponentGroup&gt; Id attribute value for the 
+                             generated fragment. Note all invalid characters 
+                             converted to underscores. (short: -gn)
+    &lt;file&gt;                 - The .WXS output file.
+
+Optional parameters when creating a new fragment:
+    -alias &lt;alias&gt;         - The alias to replace the base directory in the 
+                             File element's src attribute. The default is to 
+                             put the full hard coded path. (short: -a)
+    -direXclude &lt;exdir&gt;    - Directories to exclude. There is no wildcard 
+                             matching, only string contains matching. Specify 
+                             as many -direXclude options as necessary.
+                             (short: -x)
+    -diskId &lt;number&gt;       - The value of the DiskId attribute on component 
+                             elements. Must be a number value and defaults 
+                             to 1. (short: -did)
+    -dirref &lt;DirectoryRef&gt; - Override the default &lt;DirectoryRef&gt; Id 
+                             attribute.  Default: INSTALLDIR (short: -dr)
+    -ext &lt;ext&gt;             - File extensions to exclude. Specify as many -ext
+                             options as necessary. (short: -e)
+    -includeFile &lt;file&gt;    - Files to be added as WiX includes at the top
+                             of the output file. Specify as many -includeFile
+                             options as necessary. No validation on the file
+                             is done at all. (short: -if)
+    -norecurse             - Do not recurse directories. Defaults to recursing 
+                             all directories under &lt;dir&gt;. (short: -nr)
+    -norootdirectory       - Does not create the root &lt;Directory&gt; element and 
+                             places the root components directly under the 
+                             &lt;DirectoryRef&gt; element. (short: -nrd)
+    -regExExclude "regex"  - Adds a regular expression exclusion to both files
+                             and directories. These exclusions are processed 
+                             after -ext for files and -direXclude for 
+                             directories. The regex must be enclosed in quotes
+                             to account for white space. All regex values are
+                             treated as case insensitive. For file names, the 
+                             value checked is just the name of the file. For
+                             directories, the check is against the complete 
+                             drive and directory name. Specify as many 
+                             -regExExclude values as necessary. (short: -rex)
+    -verbose               - Verbose output (short: -v)
+    -Win64var &lt;var&gt;        - If specified, adds Win64="&lt;var&gt;" to all 
+                             components. Use a value like "$(var.yes64)" to 
+                             specify your WiX variable. If you are only 
+                             working with x64, set this value to "true" to 
+                             force it always on.
+
+Required parameters to update a previously created file for major upgrades. 
+If you delete an input file, using -update will delete the Component and File
+elements from the produced .PARAFFIN file.
+    -update                - Indicates you want to update an existing .WXS file
+                             that was created by Paraffin for a major upgrade.
+    &lt;file&gt;                 - The .WXS file to process. The updated output is 
+                             written to &lt;file&gt;.PARAFFIN.
+                             
+Required parameters to update a previously created file for minor upgrades.
+If you delete an input file, a -PatchUpgrade will keep the deleted Component 
+and File elements, add a Transitive="Yes" attribute to the Component, and a 
+Conditional attribute such that when the patch is installed, the deleted file
+will be removed from the system.
+   -PatchUpdate            - Indicates you want to update an existing .WXS file
+                             that was created by Paraffin for a minor upgrade.
+                             (short: -pu)
+    &lt;file&gt;                 - The .WXS file to process. The updated output is 
+                             written to &lt;file&gt;.PARAFFIN.
+
+Optional parameters when updating or patch updating a previously created file. 
+Any additional values are added to those already specified when the file was 
+initially created:
+   -direXclude &lt;exdir&gt;     - Directories to exclude. (short: -x)
+   -ext &lt;ext&gt;              - File extensions to exclude. (short: -e)
+   -regExExclude "regex"   - Adds a regular expression exclusion to both files
+                             and directories. (short: -rex)
+   -ReportIfDifferent      - Report through an exit code of 4 if the input .WXS
+                             and output .PARAFFIN files are different. If the 
+                             files are identical, the exit code is 0. 
+                             (short: -rid)
+   -verbose                - Verbose output (short: -v)
+   
+Optional parameters when doing a patch update.
+    -PatchCreateFiles      - Creates the zero byte files that are missing when
+                             doing a -PatchUpdate so your installer will build.
+                             (short: -pcf)
+                             
+Required parameters to only create the zero byte files needed to complete an 
+install build. This switch is ideal as calling as part of your build so you 
+don't have to keep zero byte files in your version control system.
+    -PatchCreateFiles      - Creates the zero byte files that are missing when
+                             doing a -PatchUpdate so your installer will build.
+                             (short: -pcf)
+    &lt;file&gt;                 - The .WXS file to process. 
+ 
+As Paraffin is processing a directory and finds any files matching 
+*.ParaffinMold, it will inject the contents of each .ParaffinMold file into 
+the output file under the current element (normally Directory, or DirectoryRef 
+if -norootdirectory is used).
+
+All .ParaffinMold files are WiX fragment files and must have a DirectoryRef
+element, but the Id value is ignored. Any elements under the DirectoryRef
+are placed directly in the output file. There is no checking done on the 
+validity of any of those child nodes. If you manually add a new WiX namespace 
+such as 'xmlns:util="http://schemas.microsoft.com/wix/UtilExtension"' to the WiX 
+element for your .ParaffinMold files to compile correctly, those namespaces will 
+be copied over to the .PARAFFIN file. You should put those additional 
+namespaces before the standard xmlns declarations to make differencing easier.
+Here is an example .ParaffinMold file to insert a Registry element. 
+
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"&gt;
+  &lt;Fragment&gt;
+    &lt;DirectoryRef Id="INSTALLDIR"&gt;
+       &lt;Component Id="HappyID" 
+                     Guid="PUT-GUID-HERE"&gt;
+         &lt;RegistryKey Root="HKLM" 
+                            Key="SOFTWARE\My Company\My Product" 
+                            Action="createAndRemoveOnUninstall"&gt;
+           &lt;RegistryValue Name="InstallRoot" Value="[INSTALDIR]" 
+                          Type="string" KeyPath="yes"/&gt;
+        &lt;/RegistryKey&gt;
+       &lt;/Component&gt;
+     &lt;/DirectoryRef&gt;
+   &lt;/Fragment&gt;
+ &lt;/Wix&gt;</value>
+  </data>
+  <data name="DiskIdMustBeInteger" xml:space="preserve">
+    <value>The -DiskId value must be an integer value.</value>
+  </data>
+  <data name="Win64VarMultipleSwitches" xml:space="preserve">
+    <value>Only one -Win64Var switch at a time is supported.</value>
+  </data>
+  <data name="DirectoryCannotBeEmpty" xml:space="preserve">
+    <value>The starting directory value cannot be empty.</value>
+  </data>
+  <data name="SourceSwitchName" xml:space="preserve">
+    <value>VerboseSwitch</value>
+  </data>
+  <data name="TraceSourceName" xml:space="preserve">
+    <value>VerboseOutput</value>
+  </data>
+  <data name="VerboseCreateFile" xml:space="preserve">
+    <value>Creating file               : {0}</value>
+  </data>
+  <data name="VerboseUpdateFile" xml:space="preserve">
+    <value>Updating file               : {0}</value>
+  </data>
+  <data name="VerboseProcessNewDirectory" xml:space="preserve">
+    <value>Creating new directory      : {0}</value>
+  </data>
+  <data name="VerboseProcessUpdateDirectory" xml:space="preserve">
+    <value>Updating existing directory : {0}</value>
+  </data>
+  <data name="VerboseReturnValue" xml:space="preserve">
+    <value>Return code                 : {0}</value>
+  </data>
+  <data name="AddingKeyPathToFile" xml:space="preserve">
+    <value>Adding a missing KeyPath='yes' attribute to {0}</value>
+  </data>
+  <data name="ErrorMultipleFilesPerComponent" xml:space="preserve">
+    <value>Paraffin 3.5 and higher no longer supports multiple files per component. You will need to use Paraffin 3.13 or earlier on this file.</value>
+  </data>
+  <data name="RemovedKeyPathFromComponent" xml:space="preserve">
+    <value>Removed KeyPath attribute off the Component {0}</value>
+  </data>
+  <data name="NoPatchWhenCreating" xml:space="preserve">
+    <value>When creating files, any transitive patch options are invalid.</value>
+  </data>
+  <data name="VerboseFileRemoved" xml:space="preserve">
+    <value>File removed, patching      : {0}</value>
+  </data>
+  <data name="VerboseZeroByteFile" xml:space="preserve">
+    <value>Creating zero byte file     : {0}</value>
+  </data>
+  <data name="VerboseCreateZeroFiles" xml:space="preserve">
+    <value>Processing file             : {0}</value>
+  </data>
+  <data name="AttemptingToAddPreviouslyDeletedFile" xml:space="preserve">
+    <value>The following file was set to Transitive='yes' but it's file size is greater than zero bytes. You need to convert to a major upgrade. File: {0}</value>
+  </data>
+  <data name="VerboseAddingNamespace" xml:space="preserve">
+    <value>Adding custom namespace     : {0}={1}</value>
+  </data>
+</root>

@@ -1,0 +1,14 @@
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <DirectoryRef Id="INSTALLDIR">
+       <Component Id="HappyID"
+                     Guid="PUT-GUID-HERE">
+         <RegistryKey Root="HKLM"
+                            Key="SOFTWARE\My Company\My Product"
+                            Action="createAndRemoveOnUninstall">
+           <RegistryValue Name="InstallRoot" Value="[INSTALDIR]"
+                          Type="string" KeyPath="yes"/>
+        </RegistryKey>
+       </Component>
+     </DirectoryRef>
+   </Fragment>

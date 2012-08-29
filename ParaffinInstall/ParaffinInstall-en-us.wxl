@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WixLocalization Culture="en-us" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+  <!-- The language and code page for this file.-->
+  <String Id="LANGUAGE">1033</String>
+  <String Id="CODEPAGE">1252</String>
+
+  <!-- Product key values -->
+  <String Id="ProductName">Paraffin (WiX Fragment Creation Tool)</String>
+
+  <String Id='VS2010Error'>This application requires one of the Visual Studio 2010 versions to be installed</String>
+  <String Id='VS2010NotRunError'>The Visual Studio 2010 Projects Location is not set. Please start Visual Studio 2008 to initialize it for this user account.</String>
+
+  <String Id='HighVersionInstalled'>A higher version of [PRODUCTNAME] is already installed.</String>
+  
+  <!-- Package key values -->
+  <String Id="PackageKeywords">Installer WiX</String>
+  <String Id="PackageDescription">A better Tallow for Windows Installer XML (WiX)</String>
+  <String Id="PackageComments">Copyright © 2007-2010 John Robbins</String>
+  <String Id="PackageManufacturer">John Robbins\Wintellect</String>
+
+  <!-- AddRemovePrograms values -->
+  <String Id="ArpComments">Source code for the Paraffin tool</String>
+
+  <!-- Disk prompt (never used!) -->
+  <String Id="DiskPrompt">Paraffin Installation [1]</String>
+
+  <!-- The installation directories -->
+  <String Id="TargetDir">Paraffin</String>
+</WixLocalization>

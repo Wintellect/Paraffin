@@ -1,0 +1,3 @@
+..\debug\Paraffin.exe -dir ..\Paraffin -groupname PARAFFIN_SOURCE -alias ..\Paraffin ParaffinSourceFragment.wxs -ext .suo -ext .user -ext DebuggerSettings -direXclude obj -direXclude bin -direXclude VS2008Projects
+..\debug\Paraffin.exe -dir ..\Debug -groupname PARAFFIN_BINARIES -alias ..\Debug ParaffinBinariesFragment.wxs -ext .suo -ext DebuggerSettings -ext .user -direXclude obj -rex ".*\.vshost\.exe.*" -rex ".*codeanalysis.*"
+..\debug\Paraffin.exe -dir .\ -groupname PARAFFIN_INSTALL -alias .\ ParaffinInstallFragment.wxs -ext .wixobj -ext .msi -ext .Paraffin -ext .wixpdb -ext .log -ext .suo -ext .user -direXclude obj -direXclude bin -direXclude VS2008Projects
