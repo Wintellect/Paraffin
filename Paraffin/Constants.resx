@@ -193,7 +193,7 @@ Usage:
             [-alias &lt;alias&gt; -direXclude &lt;exdir&gt;* | -dirref &lt;DirectoryRef&gt; | 
              -diskId &lt;number&gt; | -ext &lt;ext&gt;* | -includeFile &lt;file&gt;* | 
              -norecurse | -regExExclude "regex"* | -norootdirectory | 
-             -verbose | -Win64 &lt;var&gt;])
+             -paraffinDir &lt;dir&gt; -verbose | -Win64 &lt;var&gt;])
           (-update &lt;file&gt; 
            [-direXclude &lt;exdir&gt;* | -ext &lt;ext&gt;* | -RegExExclude "regex"* | 
             -ReportIfDifferent | -verbose])
@@ -234,6 +234,9 @@ Optional parameters when creating a new fragment:
     -norootdirectory       - Does not create the root &lt;Directory&gt; element and 
                              places the root components directly under the 
                              &lt;DirectoryRef&gt; element. (short: -nrd)
+    -paraffinDir &lt;dir&gt;     - Directory to write .paraffin file to. If
+                             not specified, defaults to same directory as .WXS
+                             output file.
     -regExExclude "regex"  - Adds a regular expression exclusion to both files
                              and directories. These exclusions are processed 
                              after -ext for files and -direXclude for 
