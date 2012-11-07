@@ -59,11 +59,6 @@ namespace Wintellect.Paraffin
 
                 if (ret == true)
                 {
-                    if (!string.IsNullOrEmpty(argValues.ParaffinDir))
-                    {
-                        outputFile = Path.Combine(argValues.ParaffinDir, Path.GetFileName(outputFile));
-                    }
-
                     // Create the new output file.
                     XDocument outputDoc = new XDocument();
 
@@ -652,7 +647,6 @@ namespace Wintellect.Paraffin
             argValues.PatchUpdate = originalArgs.PatchUpdate;
             argValues.FileName = originalArgs.FileName;
             argValues.PatchCreateFiles = originalArgs.PatchCreateFiles;
-            argValues.ParaffinDir = originalArgs.ParaffinDir;
 
             // Look for the version element. If it's missing or 1, it's an old
             // file.
@@ -720,9 +714,6 @@ namespace Wintellect.Paraffin
                        options.Descendants(NORECURSELEM).First().Value,
                                             CultureInfo.InvariantCulture);
 
-            var paraffinDirElems = options.Descendants(PARAFFINDIRECTORYELEM).ToList();
-            argValues.ParaffinDir = paraffinDirElems.Any() ? paraffinDirElems.First().Value : null;
-            
             var extNode = options.Descendants(EXTEXCLUDEELEM);
             foreach (var item in extNode.Descendants())
             {

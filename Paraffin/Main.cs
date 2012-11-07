@@ -222,7 +222,6 @@ namespace Wintellect.Paraffin
         private const String NEXTDIRECTORYNUMELEM = "NextDirectoryNumber";
         private const String NEXTCOMPONENTNUMBER = "NextComponentNumber";
         private const String NODIRECTORYELEM = "NoRootDirectory";
-        private const String PARAFFINDIRECTORYELEM = "ParrafinDirectory";
         private const String DISKIDELEM = "DiskId";
         private const String INCLUDEFILESELEM = "IncludeFiles";
         private const String INCLUDEFILEITEMELEM = "File";
@@ -458,7 +457,6 @@ namespace Wintellect.Paraffin
                     new XElement(WIN64ELEM, argValues.Win64),
                     new XElement(NORECURSELEM, argValues.NoRecursion),
                     new XElement(NODIRECTORYELEM, argValues.NoRootDirectory),
-                    new XElement(PARAFFINDIRECTORYELEM, argValues.ParaffinDir),
                     new XElement(DISKIDELEM, argValues.DiskId));
 
             // Add the file extension exclusions.

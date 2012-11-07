@@ -51,8 +51,6 @@ namespace Wintellect.Paraffin
         private const string NORECURSESHORT = "nr";
         private const string NOROOTDIRECTORY = "norootdirectory";
         private const string NOROOTDIRECTORYSHORT = "nrd";
-        private const string PARAFFINDIR = "paraffindir";
-        private const string PARAFFINDIRSHORT = "pd";
         private const string PATCHCREATEFILES = "PatchCreateFiles";
         private const string PATCHCREATEFILESSHORT = "pcf";
         private const string PATCHUPDATE = "PatchUpdate";
@@ -118,8 +116,6 @@ namespace Wintellect.Paraffin
                             GROUPNAMESHORT, 
                             INCFILE, 
                             INCFILESHORT,
-                            PARAFFINDIR,
-                            PARAFFINDIRSHORT, 
                             REGEXEXCLUDE, 
                             REGEXEXCLUDESHORT,
                             WIN64VAR,
@@ -139,17 +135,11 @@ namespace Wintellect.Paraffin
             this.IncludeFiles = new List<String>();
             this.RegExExcludes = new List<Regex>();
             this.Win64 = String.Empty;
-            this.ParaffinDir = String.Empty;
 
             this.Version = Program.CurrentFileVersion;
 
             this.errorMessage = String.Empty;
         }
-
-        /// <summary>
-        /// Gets or sets the directory to write .PARRAFIN files to
-        /// </summary>
-        public string ParaffinDir { get; set; }
 
         /// <summary>
         /// Gets or sets the version of the input file when updating.
@@ -315,7 +305,7 @@ namespace Wintellect.Paraffin
         /// The value of the switch. For flag switches this is null/Nothing.
         /// </param>
         /// <returns>
-        /// One of the <see cref="ArgParser.SwitchStatus"/> values.
+        /// One of the <see cref="SwitchStatus"/> values.
         /// </returns>
         [SuppressMessage("Microsoft.Design",
                          "CA1062:Validate arguments of public methods",
@@ -458,11 +448,6 @@ namespace Wintellect.Paraffin
                     this.NoRootDirectory = true;
                     break;
 
-                case PARAFFINDIR:
-                case PARAFFINDIRSHORT:
-                    this.ParaffinDir = switchValue;
-                    break;
-
                 case PATCHUPDATE:
                 case PATCHUPDATESHORT:
                     this.PatchUpdate = true;
@@ -541,7 +526,7 @@ namespace Wintellect.Paraffin
         /// The value parsed out.
         /// </param>
         /// <returns>
-        /// One of the <see cref="ArgParser.SwitchStatus"/> values.
+        /// One of the <see cref="SwitchStatus"/> values.
         /// </returns>
         protected override SwitchStatus OnNonSwitch(string value)
         {
@@ -571,7 +556,7 @@ namespace Wintellect.Paraffin
         /// performed.
         /// </summary>
         /// <returns>
-        /// One of the <see cref="ArgParser.SwitchStatus"/> values.
+        /// One of the <see cref="SwitchStatus"/> values.
         /// </returns>
         protected override SwitchStatus OnDoneParse()
         {
@@ -673,7 +658,7 @@ namespace Wintellect.Paraffin
         /// The value of the -groupname switch.
         /// </param>
         /// <returns>
-        /// One of the <see cref="ArgParser.SwitchStatus"/> values.
+        /// One of the <see cref="SwitchStatus"/> values.
         /// </returns>
         private SwitchStatus ProcessGroupName(string switchValue)
         {
