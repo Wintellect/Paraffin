@@ -594,7 +594,7 @@ namespace Wintellect.Paraffin
                 // Skip all those filenames that might match the regex.
                 var noRegExMatch = from file in validExtensions
                                    where argValues.RegExExcludes.
-                                             Find(m => m.IsMatch(file)) == null
+                                             Any(m => !m.IsMatch(Path.GetFileName(file)))
                                    select file;
                 retValue = noRegExMatch;
             }
