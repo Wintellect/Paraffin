@@ -1,6 +1,6 @@
 ﻿//------------------------------------------------------------------------------
 // <copyright file= "Main.Create.cs" company="Wintellect">
-//    Copyright (c) 2002-2010 John Robbins/Wintellect -- All rights reserved.
+//    Copyright (c) 2002-2012 John Robbins/Wintellect -- All rights reserved.
 // </copyright>
 // <Project>
 //    Wintellect Debugging .NET Code
@@ -10,14 +10,8 @@
 namespace Wintellect.Paraffin
 {
     using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Globalization;
     using System.IO;
     using System.Linq;
-    using System.Runtime.InteropServices;
-    using System.Text;
-    using System.Text.RegularExpressions;
     using System.Xml.Linq;
 
     /// <summary>
@@ -41,13 +35,13 @@ namespace Wintellect.Paraffin
             XDocument doc = new XDocument();
 
             // Add the WiX and Fragment nodes.
-            XElement root = new XElement(wixNS + "Wix");
+            XElement root = new XElement(WixNamespace + "Wix");
             doc.Add(root);
-            XElement fragment = new XElement(wixNS + "Fragment");
+            XElement fragment = new XElement(WixNamespace + "Fragment");
             root.Add(fragment);
 
             // Add the DirectoryRef node.
-            XElement directoryRef = new XElement(wixNS + "DirectoryRef",
+            XElement directoryRef = new XElement(WixNamespace + "DirectoryRef",
                                  new XAttribute("Id", argValues.DirectoryRef));
             fragment.Add(directoryRef);
 
@@ -146,33 +140,36 @@ namespace Wintellect.Paraffin
             var filesQuery = ProcessedDirectoryFiles(directory);
 
             // Only do the work if there are some files in the directory.
-            if (filesQuery.Count() > 0)
+            var files = filesQuery as string[] ?? filesQuery.ToArray();
+            if (!files.Any())
             {
-                // Create the first Component element. 
-                XElement currentComponent = CreateComponentElement();
-
-                // For each file on disk.
-                foreach (var file in filesQuery)
-                {
-                    // Create the File element and add it to the current
-                    // Component element.
-                    XElement fileElement = CreateFileElement(file);
-                    currentComponent.Add(fileElement);
-                    directoryElem.Add(currentComponent);
-                    currentComponent = CreateComponentElement();
-                }
-
-                // Look for any files the user wants to inject contents from 
-                // this directory.
-                XElement addToNode = directoryElem;
-
-                AddMoldFilesContentToNode(directory, addToNode);
-
-                // I'm done with this directory so bump up the component and 
-                // directory count if the user asked for that to happen. This 
-                // is for compatability with version 1 files.
-                componentNumber += argValues.IncrementValue - 2;
+                return;
             }
+
+            // Create the first Component element. 
+            XElement currentComponent = CreateComponentElement();
+
+            // For each file on disk.
+            foreach (var file in files)
+            {
+                // Create the File element and add it to the current
+                // Component element.
+                XElement fileElement = CreateFileElement(file);
+                currentComponent.Add(fileElement);
+                directoryElem.Add(currentComponent);
+                currentComponent = CreateComponentElement();
+            }
+
+            // Look for any files the user wants to inject contents from 
+            // this directory.
+            XElement addToNode = directoryElem;
+
+            AddMoldFilesContentToNode(directory, addToNode);
+
+            // I'm done with this directory so bump up the component and 
+            // directory count if the user asked for that to happen. This 
+            // is for compatibility with version 1 files.
+            componentNumber += argValues.IncrementValue - 2;
         }
     }
 }

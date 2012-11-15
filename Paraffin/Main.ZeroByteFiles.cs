@@ -1,6 +1,6 @@
 ﻿//------------------------------------------------------------------------------
 // <copyright file= "Main.ZeroByteFiles.cs" company="Wintellect">
-//    Copyright (c) 2002-2010 John Robbins/Wintellect -- All rights reserved.
+//    Copyright (c) 2002-2012 John Robbins/Wintellect -- All rights reserved.
 // </copyright>
 // <Project>
 //    Wintellect Debugging .NET Code
@@ -10,14 +10,8 @@
 namespace Wintellect.Paraffin
 {
     using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Globalization;
     using System.IO;
     using System.Linq;
-    using System.Runtime.InteropServices;
-    using System.Text;
-    using System.Text.RegularExpressions;
     using System.Xml.Linq;
 
     /// <summary>
@@ -45,13 +39,13 @@ namespace Wintellect.Paraffin
                 // section.
                 Boolean ret = InitializeArgumentsFromFile(options.Value);
 
-                if (true == ret)
+                if (ret)
                 {
                     // Get the starting directory values ready to go.
                     InitializeDirectoryValues();
 
                     // Grab all the File elements.
-                    var files = inputDoc.Descendants(wixNS + "File");
+                    var files = inputDoc.Descendants(WixNamespace + "File");
 
                     // Get just the files with Component parents that have the 
                     // Transitive value set.

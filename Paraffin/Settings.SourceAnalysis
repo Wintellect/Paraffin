@@ -1,6 +1,17 @@
-<StyleCopSettings Version="4.3">
+<StyleCopSettings Version="105">
+  <GlobalSettings>
+    <CollectionProperty Name="RecognizedWords">
+      <Value>Arg</Value>
+      <Value>Args</Value>
+      <Value>groupname</Value>
+      <Value>Recurse</Value>
+      <Value>recursed</Value>
+      <Value>recursing</Value>
+      <Value>src</Value>
+    </CollectionProperty>
+  </GlobalSettings>
   <Analyzers>
-    <Analyzer AnalyzerId="Microsoft.StyleCop.CSharp.ReadabilityRules">
+    <Analyzer AnalyzerId="StyleCop.CSharp.ReadabilityRules">
       <Rules>
         <Rule Name="UseBuiltInTypeAlias">
           <RuleSettings>
@@ -15,11 +26,11 @@
       </Rules>
       <AnalyzerSettings />
     </Analyzer>
-    <Analyzer AnalyzerId="Microsoft.StyleCop.CSharp.DocumentationRules">
+    <Analyzer AnalyzerId="StyleCop.CSharp.DocumentationRules">
       <AnalyzerSettings>
         <BooleanProperty Name="IgnorePrivates">True</BooleanProperty>
         <StringProperty Name="CompanyName">Wintellect</StringProperty>
-        <StringProperty Name="Copyright">Copyright (c) 2002-2010 John Robbins/Wintellect -- All rights reserved.</StringProperty>
+        <StringProperty Name="Copyright">Copyright (c) 2002-2012 John Robbins/Wintellect -- All rights reserved.</StringProperty>
       </AnalyzerSettings>
     </Analyzer>
   </Analyzers>

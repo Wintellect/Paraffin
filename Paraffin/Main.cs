@@ -1,6 +1,6 @@
 ﻿//------------------------------------------------------------------------------
 // <copyright file= "Main.cs" company="Wintellect">
-//    Copyright (c) 2002-2010 John Robbins/Wintellect -- All rights reserved.
+//    Copyright (c) 2002-2012 John Robbins/Wintellect -- All rights reserved.
 // </copyright>
 // <Project>
 //    Wintellect Debugging .NET Code
@@ -164,6 +164,11 @@
  *        when producing the file, you should put your custom namespace 
  *        declarations before xmlns="http://schemas.microsoft.com/wix/2006/wi"
  *        to make .WXS and .PARAFFIN file compares easier.
+ * 3.61 - Fixed a bug where .PARAFFINMOLD files were included in the output 
+ *        .WXS files when they should have been ignored.
+ *      - Finally broke down and started using Resharper so carefully started
+ *        fixing any warnings reported. Not all warnings are fixed, mainly the 
+ *        ones that didn't destabilize the code.
  -----------------------------------------------------------------------------*/
 namespace Wintellect.Paraffin
 {
@@ -211,7 +216,6 @@ namespace Wintellect.Paraffin
         private const String GROUPNAMEELEM = "GroupName";
         private const String ALIASELEM = "DirAlias";
         private const String INCREMENTELEM = "Increment";
-        private const String GUIDSELEM = "Guids";
         private const String MULTIPLEELEM = "Multiple";
         private const String NORECURSELEM = "Norecurse";
         private const String WIN64ELEM = "Win64";
@@ -229,8 +233,11 @@ namespace Wintellect.Paraffin
         private const String REGEXEXITEMELEM = "RegEx";
         #endregion
 
+        // The PE file extensions.
+        private static readonly String[] BinaryExtensions = { ".DLL", ".EXE", ".OCX" };
+
         // The WiX 3.0 namespace.
-        private static XNamespace wixNS =
+        private static readonly XNamespace WixNamespace =
                                      "http://schemas.microsoft.com/wix/2006/wi";
 
         // The argument values used across all the methods.
@@ -252,9 +259,6 @@ namespace Wintellect.Paraffin
 
         // The error message.
         private static String errorMessage;
-
-        // The PE file extensions.
-        private static String[] binaryExtensions = { ".DLL", ".EXE", ".OCX" };
 
         // The TraceSource used for output.
         private static TraceSource verboseOut;
@@ -279,8 +283,10 @@ namespace Wintellect.Paraffin
             errorMessage = String.Empty;
 
             verboseOut = new TraceSource(Constants.TraceSourceName,
-                                         SourceLevels.Critical);
-            verboseOut.Switch = new SourceSwitch(Constants.SourceSwitchName);
+                                         SourceLevels.Critical)
+                {
+                    Switch = new SourceSwitch(Constants.SourceSwitchName)
+                };
 
 #if DEBUG==false
             // In release builds there's no sense doing the OutputDebugString
@@ -294,9 +300,9 @@ namespace Wintellect.Paraffin
             if (args.Length > 0)
             {
                 Boolean parsed = argValues.Parse(args);
-                if (true == parsed)
+                if (parsed)
                 {
-                    if (true == argValues.Verbose)
+                    if (argValues.Verbose)
                     {
                         verboseOut.Switch.Level = SourceLevels.Information;
                         SmartConsoleTraceListener sctl =
@@ -304,12 +310,11 @@ namespace Wintellect.Paraffin
                         verboseOut.Listeners.Add(sctl);
                     }
 
-                    if ((true == argValues.Update) ||
-                        (true == argValues.PatchUpdate))
+                    if (argValues.Update || argValues.PatchUpdate)
                     {
                         returnValue = UpdateExistingFile();
                     }
-                    else if (true == argValues.PatchCreateFiles)
+                    else if (argValues.PatchCreateFiles)
                     {
                         returnValue = CreateZeroByteFiles();
                     }
@@ -387,8 +392,8 @@ namespace Wintellect.Paraffin
                 XDocument inputMold = XDocument.Load(files[i]);
 
                 // Get the nodes hanging off the DirectoryRef node.
-                var toAddNodes = inputMold.Descendants(wixNS + "DirectoryRef").
-                                                                    Elements();
+                var toAddNodes = inputMold.Descendants(WixNamespace + 
+                                                    "DirectoryRef").Elements();
 
                 Int32 count = toAddNodes.Count();
                 Debug.Assert(count >= 1, "count >= 1");
@@ -472,7 +477,7 @@ namespace Wintellect.Paraffin
             XElement dirExList = new XElement(DIREEXCLUDEELEM);
             foreach (var item in argValues.DirectoryExcludeList)
             {
-                dirExList.Add(new XElement(DIREXT, item.ToString()));
+                dirExList.Add(new XElement(DIREXT, item));
             }
 
             initOptions.Add(dirExList);
@@ -481,8 +486,7 @@ namespace Wintellect.Paraffin
             XElement includeList = new XElement(INCLUDEFILESELEM);
             foreach (var item in argValues.IncludeFiles)
             {
-                includeList.Add(new XElement(INCLUDEFILEITEMELEM,
-                                             item.ToString()));
+                includeList.Add(new XElement(INCLUDEFILEITEMELEM, item));
             }
 
             initOptions.Add(includeList);
@@ -521,8 +525,7 @@ namespace Wintellect.Paraffin
 
             // Grab all the Component elements and sort them by the ID 
             // attribute.
-            var compNodes = from node in fragment.
-                                         Descendants(wixNS + "Component")
+            var compNodes = from node in fragment.Descendants(WixNamespace + "Component")
                             select node;
 
             // In version 1 files I sorted the component elements so for old
@@ -531,20 +534,20 @@ namespace Wintellect.Paraffin
             if (argValues.Version == Version1File)
             {
                 compNodes = compNodes.OrderBy(
-                                       n => (string)n.Attribute("Id").Value,
+                                       n => n.Attribute("Id").Value,
                                        new LogicalStringComparer());
             }
 
             // Ensure that all invalid characters are stripped from the ID.
             String id = RemoveInvalidIdCharacters(sb.ToString());
 
-            XElement groupNode = new XElement(wixNS + "ComponentGroup",
+            XElement groupNode = new XElement(WixNamespace + "ComponentGroup",
                                                 new XAttribute("Id", id));
             foreach (var component in compNodes)
             {
                 XAttribute attrib = new XAttribute("Id",
                                          component.Attribute("Id").Value);
-                XElement refNode = new XElement(wixNS + "ComponentRef",
+                XElement refNode = new XElement(WixNamespace + "ComponentRef",
                                                 attrib);
                 groupNode.Add(refNode);
             }
@@ -552,7 +555,7 @@ namespace Wintellect.Paraffin
             // Add the group node as the first child of the outputFragment only
             // if there are some components. It's perfectly reasonable to have
             // a fragment made up of nothing but directories.
-            if (0 != compNodes.Count())
+            if (compNodes.Any())
             {
                 fragment.AddFirst(groupNode);
             }
@@ -580,22 +583,27 @@ namespace Wintellect.Paraffin
             // Only do the work if there are some files in the directory.
             if (files.Length > 0)
             {
-                // Skip all those that have extensions the user does not want 
-                // and are not hidden.
-                var validExtensions = from file in files
-                                      where
-                        (false == argValues.ExtensionList.
-                                     ContainsKey(Path.GetExtension(file)
-                                                       .ToUpperInvariant())) &&
-                       ((File.GetAttributes(file) & FileAttributes.Hidden)
-                                                       != FileAttributes.Hidden)
-                                      select file;
+                // Skip all files whose extensions the user does not want,
+                // skip .paraffinmold files, and skip files that are hidden.
+                var validExtensions =
+                    files.Where(f =>
+                               {
+                                   var ext = Path.GetExtension(f);
+                                   if (null == ext)
+                                   {
+                                       return false;
+                                   }
+
+                                   return (argValues.ExtensionList.ContainsKey(ext) == false) &&
+                                           (String.Compare(".PARAFFINMOLD",
+                                                           ext,
+                                                           StringComparison.CurrentCultureIgnoreCase) != 0) &&
+                                           ((File.GetAttributes(f) & FileAttributes.Hidden) != FileAttributes.Hidden);
+                               });
 
                 // Skip all those filenames that might match the regex.
-                var noRegExMatch = from file in validExtensions
-                                   where argValues.RegExExcludes.
-                                             Find(m => m.IsMatch(file)) == null
-                                   select file;
+                var noRegExMatch = validExtensions.Where(f => argValues.RegExExcludes
+                                                                       .Find(m => m.IsMatch(f)) == null);
                 retValue = noRegExMatch;
             }
 
@@ -664,8 +672,7 @@ namespace Wintellect.Paraffin
             // if this happens to be one.
             for (int i = 0; i < argValues.DirectoryExcludeList.Count; i++)
             {
-                if (true == directory.Contains(
-                                        argValues.DirectoryExcludeList[i]))
+                if (directory.Contains(argValues.DirectoryExcludeList[i]))
                 {
                     // Return now so we don't do the regex checks.
                     return true;
@@ -675,7 +682,7 @@ namespace Wintellect.Paraffin
             // Look at the regular expressions to skip as well.
             for (int i = 0; i < argValues.RegExExcludes.Count; i++)
             {
-                if (true == argValues.RegExExcludes[i].IsMatch(directory))
+                if (argValues.RegExExcludes[i].IsMatch(directory))
                 {
                     return true;
                 }
@@ -739,15 +746,12 @@ namespace Wintellect.Paraffin
 
                 return dirIdString;
             }
-            else
-            {
-                Guid g = Guid.NewGuid();
-                String guidString = g.ToString("N").
-                                        ToUpper(CultureInfo.InvariantCulture);
-                return String.Format(CultureInfo.InvariantCulture,
-                                     "dir_{0}",
-                                     guidString);
-            }
+
+            Guid g = Guid.NewGuid();
+            String guidString = g.ToString("N").ToUpperInvariant();
+            return String.Format(CultureInfo.InvariantCulture,
+                                    "dir_{0}",
+                                    guidString);
         }
 
         /// <summary>
@@ -762,14 +766,14 @@ namespace Wintellect.Paraffin
         private static XElement CreateDirectoryElement(String directory)
         {
             // Each directory element needs a unique value.
-            String uniqueDirID = GenerateUniqueDirectoryIdName(directory);
+            String uniqueDirId = GenerateUniqueDirectoryIdName(directory);
 
             // Get the long and short names for this directory.
             DirectoryInfo info = new DirectoryInfo(directory);
 
             // I've got enough to create the Directory node.
-            XElement directoryNode = new XElement(wixNS + "Directory",
-                                             new XAttribute("Id", uniqueDirID),
+            XElement directoryNode = new XElement(WixNamespace + "Directory",
+                                             new XAttribute("Id", uniqueDirId),
                                              new XAttribute("Name", info.Name));
             return directoryNode;
         }
@@ -803,9 +807,9 @@ namespace Wintellect.Paraffin
                          g.ToString("N").ToUpper(CultureInfo.InvariantCulture));
             }
 
-            XElement file = new XElement(wixNS + "File",
+            XElement file = new XElement(WixNamespace + "File",
                                          new XAttribute("Id", fileId));
-            if (true == IsPEFile(fileName))
+            if (IsPortableEExecutableFile(fileName))
             {
                 file.Add(new XAttribute("Checksum", "yes"));
             }
@@ -847,7 +851,7 @@ namespace Wintellect.Paraffin
 
             String guidString = Guid.NewGuid().ToString().ToUpperInvariant();
 
-            XElement comp = new XElement(wixNS + "Component",
+            XElement comp = new XElement(WixNamespace + "Component",
                                    new XAttribute("Id", componentId),
                                    new XAttribute("Guid", guidString));
 
@@ -888,19 +892,22 @@ namespace Wintellect.Paraffin
             return fileName;
         }
 
-        private static Boolean IsPEFile(String fileName)
+        private static Boolean IsPortableEExecutableFile(String fileName)
         {
             String ext = Path.GetExtension(fileName);
-            ext = ext.ToUpper(CultureInfo.CurrentCulture);
-
-            for (int i = 0; i < binaryExtensions.Length; i++)
+            if (null != ext)
             {
-                if (0 == String.Compare(ext,
-                                        binaryExtensions[i],
-                                        true,
-                                        CultureInfo.CurrentCulture))
+                ext = ext.ToUpper(CultureInfo.CurrentCulture);
+
+                for (int i = 0; i < BinaryExtensions.Length; i++)
                 {
-                    return true;
+                    if (0 == String.Compare(ext,
+                                            BinaryExtensions[i],
+                                            true,
+                                            CultureInfo.CurrentCulture))
+                    {
+                        return true;
+                    }
                 }
             }
 
@@ -939,8 +946,6 @@ namespace Wintellect.Paraffin
         /// </summary>
         private static class NativeMethods
         {
-            private const int MaxPath = 255;
-
             [DllImport("shlwapi.dll",
                        CharSet = CharSet.Unicode,
                        ExactSpelling = true)]

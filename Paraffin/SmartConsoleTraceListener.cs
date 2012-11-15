@@ -1,6 +1,6 @@
 ﻿//------------------------------------------------------------------------------
 // <copyright file= "SmartConsoleTraceListener.cs" company="Wintellect">
-//    Copyright (c) 2002-2010 John Robbins/Wintellect -- All rights reserved.
+//    Copyright (c) 2002-2012 John Robbins/Wintellect -- All rights reserved.
 // </copyright>
 // <Project>
 //    Wintellect Debugging .NET Code
@@ -53,17 +53,10 @@ namespace Wintellect.Paraffin
                                         string format,
                                         params object[] args)
         {
-            if (args != null)
-            {
-                String info = String.Format(CultureInfo.InvariantCulture,
-                                            format, 
-                                            args);
-                WriteLine(info);
-            }
-            else
-            {
-                WriteLine(format);
-            }
+            String info = String.Format(CultureInfo.InvariantCulture,
+                                        format,
+                                        args);
+            this.WriteLine(info);
         }
     }
 }

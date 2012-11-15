@@ -1,6 +1,6 @@
 ﻿//------------------------------------------------------------------------------
 // <copyright file="ParaffinArgParser.cs" company="Wintellect">
-//    Copyright (c) 2002-2010 John Robbins/Wintellect -- All rights reserved.
+//    Copyright (c) 2002-2012 John Robbins/Wintellect -- All rights reserved.
 // </copyright>
 // <Project>
 //    Wintellect Debugging .NET Code
@@ -24,8 +24,6 @@ namespace Wintellect.Paraffin
         #region Command Line Option Constants
         private const string ALIAS = "alias";
         private const string ALIASSHORT = "a";
-        private const string CUSTOM = "custom";
-        private const string CUSTOMSHORT = "c";
         private const string DIR = "dir";
         private const string DIREXCLUDE = "direXclude";
         private const string DIREXCLUDESHORT = "x";
@@ -38,15 +36,11 @@ namespace Wintellect.Paraffin
         private const string EXTSHORT = "e";
         private const string GROUPNAME = "groupname";
         private const string GROUPNAMESHORT = "gn";
-        private const string GUIDS = "guids";
-        private const string GUIDSSHORT = "g";
         private const string HELP = "help";
         private const string HELPQUESTION = "?";
         private const string HELPSHORT = "h";
-        private const string INC = "inc";
         private const string INCFILE = "includeFile";
         private const string INCFILESHORT = "if";
-        private const string INCSHORT = "i";
         private const string NORECURSE = "norecurse";
         private const string NORECURSESHORT = "nr";
         private const string NOROOTDIRECTORY = "norootdirectory";
@@ -78,7 +72,7 @@ namespace Wintellect.Paraffin
         /// Initializes a new instance of the ParaffinArgParser class.
         /// </summary>
         public ParaffinArgParser()
-            : base(new String[] 
+            : base(new[] 
                         { 
                             HELP,
                             HELPQUESTION, 
@@ -96,9 +90,9 @@ namespace Wintellect.Paraffin
                             UPDATE,
                             UPDATESHORT, 
                             VERBOSE,
-                            VERBOSESHORT,
+                            VERBOSESHORT
                         },
-                     new String[] 
+                  new [] 
                         { 
                             ALIAS,
                             ALIASSHORT, 
@@ -118,7 +112,7 @@ namespace Wintellect.Paraffin
                             INCFILESHORT,
                             REGEXEXCLUDE, 
                             REGEXEXCLUDESHORT,
-                            WIN64VAR,
+                            WIN64VAR
                         },
                     true)
         {
@@ -226,7 +220,7 @@ namespace Wintellect.Paraffin
 
         /// <summary>
         /// Gets or sets the list of include files to be included into the 
-        /// output .WXS file. Note that there's no checking on existance or
+        /// output .WXS file. Note that there's no checking on existence or
         /// validity of these values.
         /// </summary>
         public List<String> IncludeFiles { get; set; }
@@ -305,7 +299,7 @@ namespace Wintellect.Paraffin
         /// The value of the switch. For flag switches this is null/Nothing.
         /// </param>
         /// <returns>
-        /// One of the <see cref="SwitchStatus"/> values.
+        /// One of the <see cref="ArgParser.SwitchStatus"/> values.
         /// </returns>
         [SuppressMessage("Microsoft.Design",
                          "CA1062:Validate arguments of public methods",
@@ -390,7 +384,7 @@ namespace Wintellect.Paraffin
                 case DISKIDSHORT:
                     {
                         // Only integer values are acceptable.
-                        Int32 outVal = 0;
+                        Int32 outVal;
                         if (false == Int32.TryParse(switchValue, out outVal))
                         {
                             this.errorMessage = Constants.DiskIdMustBeInteger;
@@ -526,7 +520,7 @@ namespace Wintellect.Paraffin
         /// The value parsed out.
         /// </param>
         /// <returns>
-        /// One of the <see cref="SwitchStatus"/> values.
+        /// One of the <see cref="ArgParser.SwitchStatus"/> values.
         /// </returns>
         protected override SwitchStatus OnNonSwitch(string value)
         {
@@ -536,7 +530,7 @@ namespace Wintellect.Paraffin
                 this.errorMessage = Constants.OutputAlreadySpecified;
                 ss = SwitchStatus.Error;
             }
-            else if (true == String.IsNullOrEmpty(value))
+            else if (String.IsNullOrEmpty(value))
             {
                 this.errorMessage = Constants.OutputCannotBeEmpty;
                 ss = SwitchStatus.Error;
@@ -556,27 +550,27 @@ namespace Wintellect.Paraffin
         /// performed.
         /// </summary>
         /// <returns>
-        /// One of the <see cref="SwitchStatus"/> values.
+        /// One of the <see cref="ArgParser.SwitchStatus"/> values.
         /// </returns>
         protected override SwitchStatus OnDoneParse()
         {
             SwitchStatus ss = SwitchStatus.NoError;
 
             // The output file can never be null.
-            if (true == string.IsNullOrEmpty(this.FileName))
+            if (string.IsNullOrEmpty(this.FileName))
             {
                 this.errorMessage = Constants.OutputCannotBeEmpty;
                 ss = SwitchStatus.Error;
                 this.errorInOnDoneParse = true;
             }
 
-            if ((false == this.Update) && 
-                (false == this.PatchUpdate) && 
+            if ((false == this.Update) &&
+                (false == this.PatchUpdate) &&
                 (false == this.PatchCreateFiles))
             {
                 // Check that I at least have a directory and prefix. Everything
                 // else is optional when creating files.
-                if (true == String.IsNullOrEmpty(this.StartDirectory))
+                if (String.IsNullOrEmpty(this.StartDirectory))
                 {
                     this.errorMessage = Constants.DirectoryCannotBeEmpty;
                     ss = SwitchStatus.Error;
@@ -588,14 +582,13 @@ namespace Wintellect.Paraffin
                     ss = SwitchStatus.Error;
                     this.errorInOnDoneParse = true;
                 }
-                else if (true == String.IsNullOrEmpty(this.GroupName))
+                else if (String.IsNullOrEmpty(this.GroupName))
                 {
                     this.errorMessage = Constants.GroupNameCannotBeEmpty;
                     ss = SwitchStatus.Error;
                     this.errorInOnDoneParse = true;
                 }
-                else if (true == this.PatchCreateFiles ||
-                         true == this.PatchUpdate)
+                else if (this.PatchCreateFiles || this.PatchUpdate)
                 {
                     this.errorMessage = Constants.NoPatchWhenCreating;
                     ss = SwitchStatus.Error;
@@ -603,12 +596,12 @@ namespace Wintellect.Paraffin
                 }
 
                 // If no directory ref was specified, set it to the default.
-                if (true == String.IsNullOrEmpty(this.DirectoryRef))
+                if (String.IsNullOrEmpty(this.DirectoryRef))
                 {
                     this.DirectoryRef = DEFAULTDIRREF;
                 }
             }
-            else if (true == this.Update)
+            else if (this.Update)
             {
                 // The user is asking to update.
                 // Check that they didn't also specify creation options.
@@ -621,14 +614,14 @@ namespace Wintellect.Paraffin
                 }
 
                 // Check to see if the user asked for patch updating, too.
-                if (true == this.PatchUpdate)
+                if (this.PatchUpdate)
                 {
                     this.errorMessage = Constants.MutuallyExclusiveOptions;
                     ss = SwitchStatus.Error;
                     this.errorInOnDoneParse = true;
                 }
             }
-            else if (true == this.PatchUpdate)
+            else if (this.PatchUpdate)
             {
                 // Check that they didn't also specify creation options.
                 if (false == String.IsNullOrEmpty(this.StartDirectory) ||
@@ -658,7 +651,7 @@ namespace Wintellect.Paraffin
         /// The value of the -groupname switch.
         /// </param>
         /// <returns>
-        /// One of the <see cref="SwitchStatus"/> values.
+        /// One of the <see cref="ArgParser.SwitchStatus"/> values.
         /// </returns>
         private SwitchStatus ProcessGroupName(string switchValue)
         {
@@ -668,7 +661,7 @@ namespace Wintellect.Paraffin
                 this.errorMessage = Constants.GroupNameMultipleSwitches;
                 ss = SwitchStatus.Error;
             }
-            else if (true == String.IsNullOrEmpty(switchValue))
+            else if (String.IsNullOrEmpty(switchValue))
             {
                 this.errorMessage = Constants.GroupNameCannotBeEmpty;
                 ss = SwitchStatus.Error;

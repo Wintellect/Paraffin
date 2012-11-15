@@ -42,6 +42,7 @@
       <Word>util</Word>
       <Word>dir</Word>
       <Word>dr</Word>
+      <Word>Arg</Word>
     </Recognized>
     <Deprecated>
     </Deprecated>

@@ -1,6 +1,6 @@
 //------------------------------------------------------------------------------
 // <copyright file="ArgParser.cs" company="Wintellect">
-//    Copyright (c) 2002-2010 John Robbins/Wintellect -- All rights reserved.
+//    Copyright (c) 2002-2012 John Robbins/Wintellect -- All rights reserved.
 // </copyright>
 // <Project>
 //    Wintellect Debugging .NET Code
@@ -32,17 +32,17 @@ namespace Wintellect.Paraffin
     internal abstract class ArgParser
     {
         // For example: "/", "-"
-        private String[] switchChars;
+        private readonly String[] switchChars;
 
         // Switch character(s) that are simple flags
-        private String[] flagSymbols;
+        private readonly String[] flagSymbols;
 
         // Switch characters(s) that take parameters.  For example: -f <file>.
         // This can be null if not needed.
-        private String[] dataSymbols;
+        private readonly String[] dataSymbols;
 
         // Are switches case-sensitive?
-        private Boolean caseSensitiveSwitches;
+        private readonly Boolean caseSensitiveSwitches;
 
         /// <summary>
         /// Initializes a new instance of the ArgParser class and defaults to 
@@ -59,9 +59,9 @@ namespace Wintellect.Paraffin
         /// True if case sensitive switches are supposed to be used.
         /// </param>
         [SuppressMessage("Microsoft.Naming",
-                           "CA1726:UsePreferredTerms",
-                           MessageId = "flag",
-                           Justification = "Flag is appropriate term when " +
+                         "CA1726:UsePreferredTerms",
+                         MessageId = "flag",
+                         Justification = "Flag is appropriate term when " +
                             "dealing with command line arguments.")]
         protected ArgParser(String[] flagSymbols,
                             String[] dataSymbols,
@@ -69,7 +69,7 @@ namespace Wintellect.Paraffin
             : this(flagSymbols,
                      dataSymbols,
                      caseSensitiveSwitches,
-                     new string[] { "/", "-" })
+                     new[] { "/", "-" })
         {
         }
 
@@ -95,10 +95,10 @@ namespace Wintellect.Paraffin
         /// <paramref name="switchChars"/> are invalid.
         /// </exception>
         [SuppressMessage("Microsoft.Naming",
-                           "CA1726:UsePreferredTerms",
-                           MessageId = "flag",
-                           Justification = "Flag is appropriate term when " +
-                            "dealing with command line arguments.")]
+                         "CA1726:UsePreferredTerms",
+                         MessageId = "flag",
+                         Justification = "Flag is appropriate term when " +
+                           "dealing with command line arguments.")]
         protected ArgParser(String[] flagSymbols,
                             String[] dataSymbols,
                             Boolean caseSensitiveSwitches,
@@ -211,7 +211,7 @@ namespace Wintellect.Paraffin
                 // Determine if this argument starts with a valid switch 
                 // character
                 Boolean isSwitch = this.StartsWithSwitchChar(args[currArg]);
-                if (true == isSwitch)
+                if (isSwitch)
                 {
                     // Indicates the symbol is a data symbol.
                     Boolean useDataSymbols = false;
@@ -219,11 +219,9 @@ namespace Wintellect.Paraffin
                     // Get the argument itself.
                     String processedArg = args[currArg].Substring(1);
 
-                    // The index into the symbol array.
-                    int n;
-
-                    // First check the flags array.
-                    n = this.IsSwitchInArray(this.flagSymbols, processedArg);
+                    // The index into the symbol array. 
+                    int n = this.IsSwitchInArray(this.flagSymbols,
+                                                 processedArg);
 
                     // If it's not in the flags array, try the data array if 
                     // that array is not null.
@@ -236,7 +234,7 @@ namespace Wintellect.Paraffin
 
                     if (-1 != n)
                     {
-                        String theSwitch = null;
+                        String theSwitch;
                         String dataValue = null;
 
                         // If it's a flag switch.
@@ -259,7 +257,7 @@ namespace Wintellect.Paraffin
                                 // Take a look at dataValue to see if it starts
                                 // with a switch character. If it does, that
                                 // means this data argument is empty.
-                                if (true == this.StartsWithSwitchChar(dataValue))
+                                if (this.StartsWithSwitchChar(dataValue))
                                 {
                                     ss = SwitchStatus.Error;
                                     break;
@@ -370,10 +368,10 @@ namespace Wintellect.Paraffin
 
         // Looks to see if the switch is in the array.
         private int IsSwitchInArray(String[] switchArray,
-                                      String value)
+                                    String value)
         {
             String valueCompare = value;
-            if (true == this.caseSensitiveSwitches)
+            if (this.caseSensitiveSwitches)
             {
                 valueCompare = value.ToUpperInvariant();
             }
@@ -383,7 +381,7 @@ namespace Wintellect.Paraffin
             for (int n = 0; n < switchArray.Length; n++)
             {
                 String currSwitch = switchArray[n];
-                if (true == this.caseSensitiveSwitches)
+                if (this.caseSensitiveSwitches)
                 {
                     currSwitch = currSwitch.ToUpperInvariant();
                 }
