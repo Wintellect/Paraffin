@@ -71,6 +71,12 @@ namespace Wintellect.Paraffin
         /// <summary>
         /// Initializes a new instance of the ParaffinArgParser class.
         /// </summary>
+        [SuppressMessage("StyleCop.CSharp.SpacingRules",
+                         "SA1026:CodeMustNotContainSpaceAfterNewKeywordInImplicitlyTypedArrayAllocation", 
+                         Justification = "Much easier to read this way."),
+         SuppressMessage("StyleCop.CSharp.ReadabilityRules",
+                         "SA1118:ParameterMustNotSpanMultipleLines",
+                         Justification = "Much easier to read this way.")]
         public ParaffinArgParser()
             : base(new[] 
                         { 
@@ -92,7 +98,7 @@ namespace Wintellect.Paraffin
                             VERBOSE,
                             VERBOSESHORT
                         },
-                  new [] 
+                  new[] 
                         { 
                             ALIAS,
                             ALIASSHORT, 
@@ -160,10 +166,10 @@ namespace Wintellect.Paraffin
 
         #region Optional Creation Parameters
         /// <summary>
-        /// Gets or sets the DirectoryRef Id if you want the fragment 
-        /// files to go somewhere else besides the INSTALLDIR.
+        /// Gets the DirectoryRef Id if you want the fragment files to go 
+        /// somewhere else besides the INSTALLDIR.
         /// </summary> 
-        public String DirectoryRef { get; set; }
+        public String DirectoryRef { get; private set; }
 
         /// <summary>
         /// Gets or sets the DiskId value applied to each component. The default
@@ -178,9 +184,9 @@ namespace Wintellect.Paraffin
         public String Alias { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of extensions to skip.
+        /// Gets the list of extensions to skip.
         /// </summary>
-        public Dictionary<String, Boolean> ExtensionList { get; set; }
+        public Dictionary<String, Boolean> ExtensionList { get; private set; }
 
         /// <summary>
         /// Gets or sets the amount to add to each component number to leave 
@@ -195,9 +201,9 @@ namespace Wintellect.Paraffin
         public Boolean NoRecursion { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of directories to exclude from the processing.
+        /// Gets the list of directories to exclude from the processing.
         /// </summary>
-        public List<String> DirectoryExcludeList { get; set; }
+        public List<String> DirectoryExcludeList { get; private set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the Win64 attribute is 
@@ -219,30 +225,30 @@ namespace Wintellect.Paraffin
         public Boolean NoRootDirectoryState { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of include files to be included into the 
-        /// output .WXS file. Note that there's no checking on existence or
-        /// validity of these values.
+        /// Gets the list of include files to be included into the output .WXS
+        /// file. Note that there's no checking on existence or validity of 
+        /// these values.
         /// </summary>
-        public List<String> IncludeFiles { get; set; }
+        public List<String> IncludeFiles { get; private set; }
         #endregion
 
         /// <summary>
-        /// Gets or sets the list of regular expression excludes that are 
-        /// applied to files and directories.
+        /// Gets the list of regular expression excludes that are applied to 
+        /// files and directories.
         /// </summary>
-        public List<Regex> RegExExcludes { get; set; }
+        public List<Regex> RegExExcludes { get; private set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the user wants to update a 
+        /// Gets a value indicating whether the user wants to update a 
         /// previously created file.
         /// </summary>
-        public Boolean Update { get; set; }
+        public Boolean Update { get; private set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the users wants verbose
+        /// Gets a value indicating whether the users wants verbose
         /// processing output or not.
         /// </summary>
-        public Boolean Verbose { get; set; }
+        public Boolean Verbose { get; private set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the user wants to compare 

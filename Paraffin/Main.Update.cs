@@ -21,7 +21,7 @@ namespace Wintellect.Paraffin
     /// <summary>
     /// All the methods related to updating files.
     /// </summary>
-    internal partial class Program
+    internal static partial class Program
     {
         /// <summary>
         /// Takes an existing .WXS file and generates an updated version, which
@@ -812,7 +812,8 @@ namespace Wintellect.Paraffin
             foreach (var regExExclude in originalArgs.RegExExcludes)
             {
                 if (false ==
-                            (argValues.RegExExcludes.Any(rx => rx.ToString() == regExExclude.ToString())))
+                            argValues.RegExExcludes.Any(rx => 
+                                     rx.ToString() == regExExclude.ToString()))
                 {
                     argValues.RegExExcludes.Add(regExExclude);
                 }

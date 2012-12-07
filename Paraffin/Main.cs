@@ -187,7 +187,7 @@ namespace Wintellect.Paraffin
     /// The main entry point for the whole program. This also contains all 
     /// methods common to creating and updating files.
     /// </summary>
-    internal partial class Program
+    internal static partial class Program
     {
         /// <summary>
         /// The file version we are dealing with.
@@ -198,12 +198,12 @@ namespace Wintellect.Paraffin
         /// Versions 0 and 1: Paraffin 3.0 and earlier.
         /// Version  2 : Paraffin 3.1
         /// </remarks>
-        public const Int32 CurrentFileVersion = 2;
+        internal const Int32 CurrentFileVersion = 2;
 
         /// <summary>
         /// The file version for 1.0.
         /// </summary>
-        public const Int32 Version1File = 1;
+        private const Int32 Version1File = 1;
 
         #region Comment Options Elements
         // All the elements for the data stored in the comment.
@@ -342,20 +342,6 @@ namespace Wintellect.Paraffin
         }
 
         /// <summary>
-        /// Writes a warning message to the screen.
-        /// </summary>
-        /// <param name="message">
-        /// The message to report.
-        /// </param>
-        /// <param name="args">
-        /// Any additional items to include in the output.
-        /// </param>
-        internal static void WriteWarning(string message, params Object[] args)
-        {
-            ColorWriteLine(ConsoleColor.Yellow, message, args);
-        }
-
-        /// <summary>
         /// Writes a error message to the screen.
         /// </summary>
         /// <param name="message">
@@ -367,6 +353,20 @@ namespace Wintellect.Paraffin
         internal static void WriteError(string message, params Object[] args)
         {
             ColorWriteLine(ConsoleColor.Red, message, args);
+        }
+
+        /// <summary>
+        /// Writes a warning message to the screen.
+        /// </summary>
+        /// <param name="message">
+        /// The message to report.
+        /// </param>
+        /// <param name="args">
+        /// Any additional items to include in the output.
+        /// </param>
+        private static void WriteWarning(string message, params Object[] args)
+        {
+            ColorWriteLine(ConsoleColor.Yellow, message, args);
         }
 
         /// <summary>
@@ -588,7 +588,8 @@ namespace Wintellect.Paraffin
                 var validExtensions =
                     files.Where(f =>
                                {
-                                   var ext = Path.GetExtension(f).ToUpperInvariant();   // same as extension list
+                                   // same as extension list
+                                   var ext = Path.GetExtension(f).ToUpperInvariant();
                                    if (null == ext)
                                    {
                                        return false;

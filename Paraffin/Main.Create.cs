@@ -17,7 +17,7 @@ namespace Wintellect.Paraffin
     /// <summary>
     /// All the methods related to new file creation.
     /// </summary>
-    internal partial class Program
+    internal static partial class Program
     {
         /// <summary>
         /// Creates a brand new .WXS file for the specified directory and 

@@ -1,6 +1,10 @@
 # Paraffin Change Log #
 
-## November 14, 2012, Version 3.61 ##
+## December 6, 2012, Version 3.6.2 ##
+- Merged in Uwe Baemayr's excellent [bug fixes](https://github.com/Wintellect/Paraffin/pull/6).
+- More minor fixes and updates reported by ReSharper and Style Cop.
+
+## November 14, 2012, Version 3.6.1 ##
 - Fixed a bug where .ParaffinMold files would be included in the output .WXS files.
 - Finally broke down and started using ReSharper and carefully started fixing any warnings reported that would not destabilize the code. (Yes, I'm late to the ReSharper party)
 - Fixed an link issue with the ReadMe.md file.
