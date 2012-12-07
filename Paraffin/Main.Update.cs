@@ -809,7 +809,14 @@ namespace Wintellect.Paraffin
                 }
             }
 
-            argValues.RegExExcludes.AddRange(originalArgs.RegExExcludes);
+            foreach (var regExExclude in originalArgs.RegExExcludes)
+            {
+                if (false ==
+                            (argValues.RegExExcludes.Any(rx => rx.ToString() == regExExclude.ToString())))
+                {
+                    argValues.RegExExcludes.Add(regExExclude);
+                }
+            }
 
             return true;
         }

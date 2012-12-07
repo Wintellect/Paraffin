@@ -588,7 +588,7 @@ namespace Wintellect.Paraffin
                 var validExtensions =
                     files.Where(f =>
                                {
-                                   var ext = Path.GetExtension(f);
+                                   var ext = Path.GetExtension(f).ToUpperInvariant();   // same as extension list
                                    if (null == ext)
                                    {
                                        return false;
