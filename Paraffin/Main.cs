@@ -231,6 +231,7 @@ namespace Wintellect.Paraffin
         private const String INCLUDEFILEITEMELEM = "File";
         private const String REGEXEXELEMENT = "RegExExcludes";
         private const String REGEXEXITEMELEM = "RegEx";
+        private const String FORCEREMOVE = "ForceRemove";
         #endregion
 
         // The PE file extensions.
@@ -392,7 +393,7 @@ namespace Wintellect.Paraffin
                 XDocument inputMold = XDocument.Load(files[i]);
 
                 // Get the nodes hanging off the DirectoryRef node.
-                var toAddNodes = inputMold.Descendants(WixNamespace + 
+                var toAddNodes = inputMold.Descendants(WixNamespace +
                                                     "DirectoryRef").Elements();
 
                 Int32 count = toAddNodes.Count();
@@ -462,7 +463,9 @@ namespace Wintellect.Paraffin
                     new XElement(WIN64ELEM, argValues.Win64),
                     new XElement(NORECURSELEM, argValues.NoRecursion),
                     new XElement(NODIRECTORYELEM, argValues.NoRootDirectory),
-                    new XElement(DISKIDELEM, argValues.DiskId));
+                    new XElement(DISKIDELEM, argValues.DiskId),
+                    new XElement(FORCEREMOVE, argValues.ForceRemove));
+
 
             // Add the file extension exclusions.
             XElement extList = new XElement(EXTEXCLUDEELEM);
@@ -799,6 +802,7 @@ namespace Wintellect.Paraffin
                 fileId = CreateSeventyCharIdString("file",
                                                    argValues.GroupName,
                                                    componentNumber - 1);
+
             }
             else
             {
@@ -821,7 +825,31 @@ namespace Wintellect.Paraffin
             file.Add(new XAttribute("Source", fileName));
             return file;
         }
+        /// <summary>
+        /// Creates a Remove element for the file in <paramref name="fileName"/>.
+        /// </summary>
+        /// <param name="fileName">
+        /// The full filename to process.
+        /// </param>
+        /// <returns>
+        /// A valid <see cref="XElement"/> for the File element.
+        /// </returns>
+        private static XElement CreateRemoveElement(String fileName)
+        {
 
+            Guid g = Guid.NewGuid();
+
+            String removeId = String.Format(CultureInfo.InvariantCulture,
+                               "remove_{0}",
+                 g.ToString("N").ToUpper(CultureInfo.InvariantCulture));
+
+            XElement remove = new XElement(WixNamespace + "RemoveFile",
+                new XAttribute("Id", removeId),
+                new XAttribute("Name", Path.GetFileName(fileName)),
+                new XAttribute("On", "install"));
+            return remove;
+
+        }
         /// <summary>
         /// Creates a standard Component element.
         /// </summary>
