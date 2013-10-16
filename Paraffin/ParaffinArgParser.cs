@@ -58,6 +58,7 @@ namespace Wintellect.Paraffin
         private const string VERBOSE = "verbose";
         private const string VERBOSESHORT = "v";
         private const string WIN64VAR = "win64var";
+        private const string FORCEREMOVE = "forceremove";
         #endregion
 
         private const string DEFAULTDIRREF = "INSTALLDIR";
@@ -96,7 +97,8 @@ namespace Wintellect.Paraffin
                             UPDATE,
                             UPDATESHORT, 
                             VERBOSE,
-                            VERBOSESHORT
+                            VERBOSESHORT,
+                            FORCEREMOVE
                         },
                   new[] 
                         { 
@@ -135,6 +137,7 @@ namespace Wintellect.Paraffin
             this.IncludeFiles = new List<String>();
             this.RegExExcludes = new List<Regex>();
             this.Win64 = String.Empty;
+            this.ForceRemove = false;
 
             this.Version = Program.CurrentFileVersion;
 
@@ -269,6 +272,11 @@ namespace Wintellect.Paraffin
         /// properly remove the files.
         /// </summary>
         public Boolean PatchCreateFiles { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the ForceRemove is enabled.
+        /// </summary>
+        public Boolean ForceRemove { get; set; }
 
         /// <summary>
         /// Reports correct command line usage.
@@ -506,7 +514,9 @@ namespace Wintellect.Paraffin
                     }
 
                     break;
-
+                case FORCEREMOVE:
+                    this.ForceRemove = true;
+                    break;
                 default:
                     {
                         this.errorMessage = Constants.UnknownCommandLineOption;

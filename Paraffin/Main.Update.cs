@@ -374,8 +374,16 @@ namespace Wintellect.Paraffin
                             // element.
                             XElement fileElement = CreateFileElement(file);
 
+
                             // Add the file to this component.
                             compElement.Add(fileElement);
+
+                            // Add remove statements
+                            XElement removeElement = CreateRemoveElement(file);
+                            if (argValues.ForceRemove == true)
+                            {
+                                compElement.Add(removeElement);
+                            }
 
                             // Add this element to the directory.
                             addToElement.Add(compElement);
@@ -703,6 +711,10 @@ namespace Wintellect.Paraffin
                     return false;
                 }
             }
+
+            argValues.ForceRemove = Convert.ToBoolean(
+                options.Descendants(FORCEREMOVE).First().Value,
+                                            CultureInfo.InvariantCulture);
 
             argValues.StartDirectory =
                         options.Descendants(DIRECTORYELEM).First().Value;

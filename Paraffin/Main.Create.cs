@@ -155,7 +155,14 @@ namespace Wintellect.Paraffin
                 // Create the File element and add it to the current
                 // Component element.
                 XElement fileElement = CreateFileElement(file);
+                XElement removeElement = CreateRemoveElement(file);
+                if (argValues.ForceRemove == true)
+                {
+                    currentComponent.Add(removeElement);
+                }
+
                 currentComponent.Add(fileElement);
+
                 directoryElem.Add(currentComponent);
                 currentComponent = CreateComponentElement();
             }
