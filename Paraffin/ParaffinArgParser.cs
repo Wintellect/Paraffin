@@ -58,6 +58,7 @@ namespace Wintellect.Paraffin
         private const string VERBOSE = "verbose";
         private const string VERBOSESHORT = "v";
         private const string WIN64VAR = "win64var";
+        private const string PERMANENT = "permanent";
         #endregion
 
         private const string DEFAULTDIRREF = "INSTALLDIR";
@@ -96,7 +97,8 @@ namespace Wintellect.Paraffin
                             UPDATE,
                             UPDATESHORT, 
                             VERBOSE,
-                            VERBOSESHORT
+                            VERBOSESHORT,
+                            PERMANENT
                         },
                   new[] 
                         { 
@@ -135,6 +137,7 @@ namespace Wintellect.Paraffin
             this.IncludeFiles = new List<String>();
             this.RegExExcludes = new List<Regex>();
             this.Win64 = String.Empty;
+            this.Permanent = false;
 
             this.Version = Program.CurrentFileVersion;
 
@@ -230,6 +233,12 @@ namespace Wintellect.Paraffin
         /// these values.
         /// </summary>
         public List<String> IncludeFiles { get; private set; }
+
+        /// <summary>
+        /// Gets whether the files are supposed to be permanently installed
+        /// </summary>
+        public Boolean Permanent { get; set; }
+
         #endregion
 
         /// <summary>
@@ -505,6 +514,9 @@ namespace Wintellect.Paraffin
                         this.Win64 = switchValue;
                     }
 
+                    break;
+                case PERMANENT:
+                    this.Permanent = true;
                     break;
 
                 default:
