@@ -231,6 +231,7 @@ namespace Wintellect.Paraffin
         private const String INCLUDEFILEITEMELEM = "File";
         private const String REGEXEXELEMENT = "RegExExcludes";
         private const String REGEXEXITEMELEM = "RegEx";
+        private const String PERMANENT = "Permanent";
         #endregion
 
         // The PE file extensions.
@@ -462,7 +463,9 @@ namespace Wintellect.Paraffin
                     new XElement(WIN64ELEM, argValues.Win64),
                     new XElement(NORECURSELEM, argValues.NoRecursion),
                     new XElement(NODIRECTORYELEM, argValues.NoRootDirectory),
-                    new XElement(DISKIDELEM, argValues.DiskId));
+                    new XElement(DISKIDELEM, argValues.DiskId),
+                    new XElement(PERMANENT, argValues.Permanent)
+                    );
 
             // Add the file extension exclusions.
             XElement extList = new XElement(EXTEXCLUDEELEM);
@@ -852,6 +855,7 @@ namespace Wintellect.Paraffin
 
             String guidString = Guid.NewGuid().ToString().ToUpperInvariant();
 
+
             XElement comp = new XElement(WixNamespace + "Component",
                                    new XAttribute("Id", componentId),
                                    new XAttribute("Guid", guidString));
@@ -859,6 +863,11 @@ namespace Wintellect.Paraffin
             if (argValues.DiskId > 1)
             {
                 comp.Add(new XAttribute("DiskId", argValues.DiskId));
+            }
+
+            if (argValues.Permanent == true )
+            {
+                comp.Add(new XAttribute("Permanent", "yes"));
             }
 
             // Does the user want the Win64 attribute?

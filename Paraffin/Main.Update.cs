@@ -704,6 +704,9 @@ namespace Wintellect.Paraffin
                 }
             }
 
+            argValues.Permanent = Convert.ToBoolean(
+                        options.Descendants(PERMANENT).First().Value, CultureInfo.InvariantCulture);
+
             argValues.StartDirectory =
                         options.Descendants(DIRECTORYELEM).First().Value;
 
