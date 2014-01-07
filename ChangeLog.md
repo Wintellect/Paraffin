@@ -1,5 +1,8 @@
 # Paraffin Change Log #
 
+## January 5, 2014, Version 3.6.3 ##
+- Merged in CamronCros's update to allow -permanent to place Permanent="Yes" on file attributes.
+
 ## December 6, 2012, Version 3.6.2 ##
 - Merged in Uwe Baemayr's excellent [bug fixes](https://github.com/Wintellect/Paraffin/pull/6).
 - More minor fixes and updates reported by ReSharper and Style Cop.

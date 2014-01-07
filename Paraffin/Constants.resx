@@ -250,6 +250,7 @@ Optional parameters when creating a new fragment:
                              specify your WiX variable. If you are only 
                              working with x64, set this value to "true" to 
                              force it always on.
+    -Permanent             - Sets Permanent="Yes" on all file elements.
 
 Required parameters to update a previously created file for major upgrades. 
 If you delete an input file, using -update will delete the Component and File
