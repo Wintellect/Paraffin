@@ -68,8 +68,8 @@ namespace Wintellect.Paraffin
                     {
                         // Only add the custom namespaces, not the regular WiX
                         // namespace.
-                        if (String.Compare(WixNamespace.NamespaceName, 
-                                          item.Value, 
+                        if (String.Compare(WixNamespace.NamespaceName,
+                                          item.Value,
                                           StringComparison.CurrentCultureIgnoreCase) != 0)
                         {
                             verboseOut.TraceInformation(
@@ -77,14 +77,14 @@ namespace Wintellect.Paraffin
                                                 item.Name.LocalName,
                                                 item.Value);
                             attrs.Add(
-                                new XAttribute(XNamespace.Xmlns + 
-                                                    item.Name.LocalName, 
+                                new XAttribute(XNamespace.Xmlns +
+                                                    item.Name.LocalName,
                                                item.Value));
                         }
                     }
 
                     // The WixNamespace+"Wix" will get us the default namespace.
-                    XElement outputRoot = new XElement(WixNamespace + "Wix", 
+                    XElement outputRoot = new XElement(WixNamespace + "Wix",
                                                        attrs);
                     outputDoc.Add(outputRoot);
 
@@ -568,7 +568,7 @@ namespace Wintellect.Paraffin
             if (info.Length > 0)
             {
                 String msg = String.Format(CultureInfo.CurrentCulture,
-                                 Constants.AttemptingToAddPreviouslyDeletedFile, 
+                                 Constants.AttemptingToAddPreviouslyDeletedFile,
                                  file);
                 throw new InvalidOperationException(msg);
             }
@@ -704,9 +704,6 @@ namespace Wintellect.Paraffin
                 }
             }
 
-            argValues.Permanent = Convert.ToBoolean(
-                        options.Descendants(PERMANENT).First().Value, CultureInfo.InvariantCulture);
-
             argValues.StartDirectory =
                         options.Descendants(DIRECTORYELEM).First().Value;
 
@@ -779,6 +776,17 @@ namespace Wintellect.Paraffin
                 argValues.DiskId = 1;
             }
 
+            var permanentValue = options.Descendants(PERMANENT);
+            if (permanentValue.Count() == 1)
+            {
+
+                argValues.Permanent = Convert.ToBoolean(
+            options.Descendants(PERMANENT).First().Value, CultureInfo.InvariantCulture);
+            }
+            else
+            {
+                argValues.Permanent = false;
+            }
             var includeFileNode = options.Descendants(INCLUDEFILESELEM);
             foreach (var item in includeFileNode.Descendants())
             {
@@ -815,7 +823,7 @@ namespace Wintellect.Paraffin
             foreach (var regExExclude in originalArgs.RegExExcludes)
             {
                 if (false ==
-                            argValues.RegExExcludes.Any(rx => 
+                            argValues.RegExExcludes.Any(rx =>
                                      rx.ToString() == regExExclude.ToString()))
                 {
                     argValues.RegExExcludes.Add(regExExclude);
