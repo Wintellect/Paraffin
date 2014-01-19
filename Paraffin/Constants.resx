@@ -234,6 +234,8 @@ Optional parameters when creating a new fragment:
     -norootdirectory       - Does not create the root &lt;Directory&gt; element and 
                              places the root components directly under the 
                              &lt;DirectoryRef&gt; element. (short: -nrd)
+    -permanent             - This adds a Permanent=yes clause to each component
+                             allowing the files to be permanently installed
     -regExExclude "regex"  - Adds a regular expression exclusion to both files
                              and directories. These exclusions are processed 
                              after -ext for files and -direXclude for 
