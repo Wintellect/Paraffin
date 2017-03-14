@@ -234,20 +234,6 @@
     <Rule Id="CA2242" Action="Error" />
     <Rule Id="CA2243" Action="Error" />
     <Rule Id="CA5122" Action="Error" />
-    <Rule Id="Wintellect1000" Action="Error" />
-    <Rule Id="Wintellect2000" Action="Error" />
-    <Rule Id="Wintellect2001" Action="Error" />
-    <Rule Id="Wintellect2002" Action="Error" />
-    <Rule Id="Wintellect2003" Action="Error" />
-    <Rule Id="Wintellect2004" Action="Error" />
-    <Rule Id="Wintellect2005" Action="Error" />
-    <Rule Id="Wintellect2007" Action="Error" />
-    <Rule Id="Wintellect3000" Action="Error" />
-    <Rule Id="Wintellect3001" Action="Error" />
-    <Rule Id="Wintellect3002" Action="Error" />
-    <Rule Id="Wintellect3003" Action="Error" />
-    <Rule Id="Wintellect3004" Action="Error" />
-    <Rule Id="Wintellect3005" Action="Error" />
   </Rules>
   <Rules AnalyzerId="Microsoft.Analyzers.NativeCodeAnalysis" RuleNamespace="Microsoft.Rules.Native">
     <Rule Id="C26100" Action="Error" />
