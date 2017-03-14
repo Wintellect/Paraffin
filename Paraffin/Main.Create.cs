@@ -1,6 +1,6 @@
 ﻿//------------------------------------------------------------------------------
 // <copyright file= "Main.Create.cs" company="Wintellect">
-//    Copyright (c) 2002-2012 John Robbins/Wintellect -- All rights reserved.
+//    Copyright (c) 2002-2017 John Robbins/Wintellect -- All rights reserved.
 // </copyright>
 // <Project>
 //    Wintellect Debugging .NET Code
@@ -35,13 +35,13 @@ namespace Wintellect.Paraffin
             XDocument doc = new XDocument();
 
             // Add the WiX and Fragment nodes.
-            XElement root = new XElement(WixNamespace + "Wix");
+            XElement root = new XElement(argValues.WixNamespace + "Wix");
             doc.Add(root);
-            XElement fragment = new XElement(WixNamespace + "Fragment");
+            XElement fragment = new XElement(argValues.WixNamespace + "Fragment");
             root.Add(fragment);
 
             // Add the DirectoryRef node.
-            XElement directoryRef = new XElement(WixNamespace + "DirectoryRef",
+            XElement directoryRef = new XElement(argValues.WixNamespace + "DirectoryRef",
                                  new XAttribute("Id", argValues.DirectoryRef));
             fragment.Add(directoryRef);
 

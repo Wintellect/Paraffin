@@ -341,17 +341,17 @@ namespace Wintellect.Paraffin {
         
         /// <summary>
         ///   Looks up a localized string similar to Paraffin {0}
-        ///(c) 2007-2012, John Robbins - john@wintellect.com
-        ///A tool for generating Windows Installer XML (WiX) 3.5/3.6 file fragments. 
+        ///(c) 2007-2017, John Robbins - john@wintellect.com
+        ///A tool for generating Windows Installer XML (WiX) 3.6/4.0 file fragments. 
         ///
         ///Usage:
         /// Paraffin (-dir &lt;dir&gt; -groupname &lt;value&gt; &lt;file&gt;
         ///            [-alias &lt;alias&gt; -direXclude &lt;exdir&gt;* | -dirref &lt;DirectoryRef&gt; | 
         ///             -diskId &lt;number&gt; | -ext &lt;ext&gt;* | -includeFile &lt;file&gt;* | 
         ///             -norecurse | -regExExclude &quot;regex&quot;* | -norootdirectory | 
-        ///             -verbose | -Win64 &lt;var&gt;])
+        ///             -verbose | -Win64 &lt;var&gt; | -WiX4])
         ///          (-update &lt;file&gt; 
-        ///           [-direXclude [rest of string was truncated]&quot;;.
+        ///           [-di [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string UsageString {
             get {

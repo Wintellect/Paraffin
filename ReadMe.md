@@ -31,10 +31,13 @@ Since the original release of Paraffin a few other requirements have been added:
 - Support for reporting if subsequent runs of Paraffin are reporting different output (i.e., adding or removing files)
 
 ## Getting Started with Paraffin ##
-Obviously, a prior working knowledge of WiX is required so head over to the [WiX Tutorial](http://wix.tramontana.co.hu/) for more information. After downloading the project, look at the Zen of Paraffin document in the root directory.
+Obviously, a prior working knowledge of WiX is required so head over to the [WiX Tutorial](https://www.firegiant.com/wix/tutorial/) for more information. After downloading the project, look at the Zen of Paraffin document in the root directory.
+
+## Where Can I Get a Pre-Built Version of Paraffin? ##
+Head right on over to the [Releases](https://github.com/Wintellect/Paraffin/releases) page and grab the latest. It is hard to believe that I started this project before GitHub supported Releases!
 
 ## Want to Contribute? ##
-Have at it! Fork away and have fun, but do send me the patches so I can put your cool features into the master branch. All you need is any version of Visual Studio 2010 or Visual Studio 2012.
+Have at it! Fork away and have fun, but do send me the patches so I can put your cool features into the master branch. All you need is any version of Visual Studio 2017.
 
 ## Have a Question? ##
 Feel free to email me (john AT wintellect.com) or on the project discussions.

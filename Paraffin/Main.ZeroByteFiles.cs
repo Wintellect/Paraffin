@@ -1,6 +1,6 @@
 ﻿//------------------------------------------------------------------------------
 // <copyright file= "Main.ZeroByteFiles.cs" company="Wintellect">
-//    Copyright (c) 2002-2012 John Robbins/Wintellect -- All rights reserved.
+//    Copyright (c) 2002-2017 John Robbins/Wintellect -- All rights reserved.
 // </copyright>
 // <Project>
 //    Wintellect Debugging .NET Code
@@ -31,8 +31,7 @@ namespace Wintellect.Paraffin
 
             // The first node has to be comment I put there when 
             // the file was created.
-            XComment options = inputDoc.Root.FirstNode as XComment;
-            if (null != options)
+            if (inputDoc.Root.FirstNode is XComment options)
             {
                 // It's a comment node, so set all the arguments from that 
                 // section.
@@ -44,7 +43,7 @@ namespace Wintellect.Paraffin
                     InitializeDirectoryValues();
 
                     // Grab all the File elements.
-                    var files = inputDoc.Descendants(WixNamespace + "File");
+                    var files = inputDoc.Descendants(argValues.WixNamespace + "File");
 
                     // Get just the files with Component parents that have the 
                     // Transitive value set.

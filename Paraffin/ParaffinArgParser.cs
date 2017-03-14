@@ -1,6 +1,6 @@
 ﻿//------------------------------------------------------------------------------
 // <copyright file="ParaffinArgParser.cs" company="Wintellect">
-//    Copyright (c) 2002-2012 John Robbins/Wintellect -- All rights reserved.
+//    Copyright (c) 2002-2017 John Robbins/Wintellect -- All rights reserved.
 // </copyright>
 // <Project>
 //    Wintellect Debugging .NET Code
@@ -15,6 +15,7 @@ namespace Wintellect.Paraffin
     using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Text.RegularExpressions;
+    using System.Xml.Linq;
 
     /// <summary>
     /// Implements the command line parsing for the Paraffin program.
@@ -59,6 +60,7 @@ namespace Wintellect.Paraffin
         private const String VERBOSESHORT = "v";
         private const String WIN64VAR = "win64var";
         private const String PERMANENT = "permanent";
+        private const String WIX4 = "WiX4";
         #endregion
 
         private const String DEFAULTDIRREF = "INSTALLDIR";
@@ -69,25 +71,28 @@ namespace Wintellect.Paraffin
         // Indicates the error was found in OnDoneParse.
         private Boolean errorInOnDoneParse;
 
+        // Flag for indicating WiX 4.
+        private Boolean useWiX4;
+
         /// <summary>
         /// Initializes a new instance of the ParaffinArgParser class.
         /// </summary>
         [SuppressMessage("StyleCop.CSharp.SpacingRules",
-                         "SA1026:CodeMustNotContainSpaceAfterNewKeywordInImplicitlyTypedArrayAllocation", 
+                         "SA1026:CodeMustNotContainSpaceAfterNewKeywordInImplicitlyTypedArrayAllocation",
                          Justification = "Much easier to read this way."),
          SuppressMessage("StyleCop.CSharp.ReadabilityRules",
                          "SA1118:ParameterMustNotSpanMultipleLines",
                          Justification = "Much easier to read this way.")]
         public ParaffinArgParser()
-            : base(new[] 
-                        { 
+            : base(new[]
+                        {
                             HELP,
-                            HELPQUESTION, 
-                            HELPSHORT, 
+                            HELPQUESTION,
+                            HELPSHORT,
                             NORECURSE,
-                            NORECURSESHORT, 
+                            NORECURSESHORT,
                             NOROOTDIRECTORY,
-                            NOROOTDIRECTORYSHORT, 
+                            NOROOTDIRECTORYSHORT,
                             PATCHUPDATE,
                             PATCHUPDATESHORT,
                             PATCHCREATEFILES,
@@ -95,30 +100,31 @@ namespace Wintellect.Paraffin
                             REPORTIFDIFFERENT,
                             REPORTIFDIFFERENTSHORT,
                             UPDATE,
-                            UPDATESHORT, 
+                            UPDATESHORT,
                             VERBOSE,
                             VERBOSESHORT,
-                            PERMANENT
+                            PERMANENT,
+                            WIX4
                         },
-                  new[] 
-                        { 
+                  new[]
+                        {
                             ALIAS,
-                            ALIASSHORT, 
+                            ALIASSHORT,
                             DIR,
                             DIREXCLUDE,
-                            DIREXCLUDESHORT, 
-                            DIRREF, 
-                            DIRREFSHORT, 
-                            DIRSHORT, 
-                            DISKID, 
+                            DIREXCLUDESHORT,
+                            DIRREF,
+                            DIRREFSHORT,
+                            DIRSHORT,
+                            DISKID,
                             DISKIDSHORT,
                             EXT,
-                            EXTSHORT, 
+                            EXTSHORT,
                             GROUPNAME,
-                            GROUPNAMESHORT, 
-                            INCFILE, 
+                            GROUPNAMESHORT,
+                            INCFILE,
                             INCFILESHORT,
-                            REGEXEXCLUDE, 
+                            REGEXEXCLUDE,
                             REGEXEXCLUDESHORT,
                             WIN64VAR
                         },
@@ -129,6 +135,8 @@ namespace Wintellect.Paraffin
             this.StartDirectory = String.Empty;
             this.GroupName = String.Empty;
             this.Alias = String.Empty;
+            this.NoRootDirectory = false;
+            this.NoRootDirectoryState = false;
             this.DirectoryRef = String.Empty;
             this.ExtensionList = new Dictionary<String, Boolean>();
             this.IncrementValue = 1;
@@ -138,6 +146,7 @@ namespace Wintellect.Paraffin
             this.RegExExcludes = new List<Regex>();
             this.Win64 = String.Empty;
             this.Permanent = false;
+            this.WiX4 = false;
 
             this.Version = Program.CurrentFileVersion;
 
@@ -238,6 +247,34 @@ namespace Wintellect.Paraffin
         /// Gets whether the files are supposed to be permanently installed
         /// </summary>
         public Boolean Permanent { get; set; }
+
+        /// <summary>
+        /// Gets whether the user wants the WiX 4 namespace or not. 
+        /// Defaults to false.
+        /// </summary>
+        public Boolean WiX4
+        {
+            get => this.useWiX4;
+            set
+            {
+                if (value == true)
+                {
+                    this.WixNamespace = "http://wixtoolset.org/schemas/v4/wxs";
+                    this.useWiX4 = true;
+                }
+                else
+                {
+                    this.WixNamespace = "http://schemas.microsoft.com/wix/2006/wi";
+                    this.useWiX4 = false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the namespace as this is different between WiX 3 and WiX 4.
+        /// Defaults to WiX3.
+        /// </summary>
+        public XNamespace WixNamespace { get; private set; }
 
         #endregion
 
@@ -514,8 +551,13 @@ String switchValue)
                     }
 
                     break;
+
                 case PERMANENT:
                     this.Permanent = true;
+                    break;
+
+                case WIX4:
+                    this.WiX4 = true;
                     break;
 
                 default:

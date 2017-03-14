@@ -1,5 +1,9 @@
 # Paraffin Change Log #
 
+## March 14, 2017, Version 3.7.0 ##
+- Added the -WiX4 switch to support WiX 4.0
+- Moved to .NET 4.6.2.
+
 ## January 5, 2014, Version 3.6.3 ##
 - Merged in CamronCros's update to allow -permanent to place Permanent="Yes" on file attributes.
 

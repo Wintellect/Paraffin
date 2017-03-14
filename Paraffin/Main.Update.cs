@@ -1,6 +1,6 @@
 ﻿//------------------------------------------------------------------------------
 // <copyright file= "Main.Update.cs" company="Wintellect">
-//    Copyright (c) 2002-2012 John Robbins/Wintellect -- All rights reserved.
+//    Copyright (c) 2002-2017 John Robbins/Wintellect -- All rights reserved.
 // </copyright>
 // <Project>
 //    Wintellect Debugging .NET Code
@@ -43,13 +43,11 @@ namespace Wintellect.Paraffin
             XDocument inputDoc = XDocument.Load(argValues.FileName);
 
             // The output filename.
-            String outputFile = Path.ChangeExtension(argValues.FileName,
-                                                     ".PARAFFIN");
+            String outputFile = Path.ChangeExtension(argValues.FileName, ".PARAFFIN");
 
             // The first node has to be comment I put there when 
             // the file was created.
-            XComment options = inputDoc.Root.FirstNode as XComment;
-            if (null != options)
+            if (inputDoc.Root.FirstNode is XComment options)
             {
                 // It's a comment node, so set all the arguments from that 
                 // section.
@@ -68,39 +66,34 @@ namespace Wintellect.Paraffin
                     {
                         // Only add the custom namespaces, not the regular WiX
                         // namespace.
-                        if (String.Compare(WixNamespace.NamespaceName,
-                                          item.Value,
-                                          StringComparison.CurrentCultureIgnoreCase) != 0)
+                        if (String.Compare(argValues.WixNamespace.NamespaceName,
+                                           item.Value,
+                                           StringComparison.CurrentCultureIgnoreCase) != 0)
                         {
-                            verboseOut.TraceInformation(
-                                                Constants.VerboseAddingNamespace,
-                                                item.Name.LocalName,
-                                                item.Value);
+                            verboseOut.TraceInformation(Constants.VerboseAddingNamespace,
+                                                        item.Name.LocalName,
+                                                        item.Value);
                             attrs.Add(
-                                new XAttribute(XNamespace.Xmlns +
-                                                    item.Name.LocalName,
+                                new XAttribute(XNamespace.Xmlns + item.Name.LocalName,
                                                item.Value));
                         }
                     }
 
                     // The WixNamespace+"Wix" will get us the default namespace.
-                    XElement outputRoot = new XElement(WixNamespace + "Wix",
-                                                       attrs);
+                    XElement outputRoot = new XElement(argValues.WixNamespace + "Wix", attrs);
                     outputDoc.Add(outputRoot);
 
                     // Add the Fragment node.
-                    XElement outputFragment = new XElement(WixNamespace + "Fragment");
+                    XElement outputFragment = new XElement(argValues.WixNamespace + "Fragment");
                     outputRoot.Add(outputFragment);
 
                     // Find the directory ref of the input file.
-                    XElement inputDirRef = inputDoc.Descendants(
-                                                WixNamespace + "DirectoryRef").First();
-                    String idValue =
-                                    inputDirRef.Attributes("Id").First().Value;
+                    XElement inputDirRef = inputDoc.Descendants(argValues.WixNamespace + "DirectoryRef").First();
+                    String idValue = inputDirRef.Attributes("Id").First().Value;
 
                     // Build a DirectoryRef for the output file.
-                    XElement outputDirRef = new XElement(WixNamespace + "DirectoryRef",
-                                                 new XAttribute("Id", idValue));
+                    XElement outputDirRef = new XElement(argValues.WixNamespace + "DirectoryRef",
+                                                         new XAttribute("Id", idValue));
 
                     // Add the directory ref to the output file.
                     outputFragment.Add(outputDirRef);
@@ -170,10 +163,9 @@ namespace Wintellect.Paraffin
         /// <remarks>
         /// As you can guess, this is called recursively.
         /// </remarks>
-        private static void
-                RecurseDirectoriesForExistingFile(XElement currInputElement,
-                                                  XElement currOutputElement,
-                                                  String directory)
+        private static void RecurseDirectoriesForExistingFile(XElement currInputElement,
+                                                              XElement currOutputElement,
+                                                              String directory)
         {
             // If the currInputElement is null, I'm processing a brand new 
             // directory that isn't in the original file. Thus, I can treat 
@@ -185,9 +177,8 @@ namespace Wintellect.Paraffin
             }
             else
             {
-                verboseOut.TraceInformation(
-                                        Constants.VerboseProcessUpdateDirectory,
-                                        directory);
+                verboseOut.TraceInformation(Constants.VerboseProcessUpdateDirectory,
+                                            directory);
 
                 // The directory element I'm going to be building up.
                 XElement outputDirElement;
@@ -213,8 +204,8 @@ namespace Wintellect.Paraffin
                     // We've got a serious problem. :( You can't have multiple
                     // directories with the same name.
                     String err = String.Format(CultureInfo.CurrentCulture,
-                                          Constants.InvalidFileNameCountFmt,
-                                                 name);
+                                               Constants.InvalidFileNameCountFmt,
+                                               name);
                     throw new InvalidOperationException(err);
                 }
 
@@ -254,11 +245,11 @@ namespace Wintellect.Paraffin
 
                     // This directory was in the previous file so copy it's 
                     // attributes over to the new file.
-                    outputDirElement = new XElement(WixNamespace + "Directory");
+                    outputDirElement = new XElement(argValues.WixNamespace + "Directory");
                     foreach (var attrib in inputDirElement.Attributes())
                     {
                         outputDirElement.SetAttributeValue(attrib.Name,
-                                                             attrib.Value);
+                                                           attrib.Value);
                     }
 
                     // Add this element to the output element.
@@ -337,11 +328,11 @@ namespace Wintellect.Paraffin
                     List<XElement> processedFiles = new List<XElement>();
 
                     // First get the child component(s) from this Directory.
-                    var comps = inputDir.Elements(WixNamespace + "Component");
+                    var comps = inputDir.Elements(argValues.WixNamespace + "Component");
 
                     // Now get all the files from just these Component 
                     // elements.
-                    var inputFiles = comps.Descendants(WixNamespace + "File");
+                    var inputFiles = comps.Descendants(argValues.WixNamespace + "File");
 
                     // Loop through all the files on disk.
                     foreach (var file in filesQuery)
@@ -469,11 +460,11 @@ namespace Wintellect.Paraffin
                                          XElement outDir)
         {
             // First get the child component(s) from this Directory.
-            var comps = inputDir.Elements(WixNamespace + "Component");
+            var comps = inputDir.Elements(argValues.WixNamespace + "Component");
 
             // Now get all the files from just these Component 
             // elements.
-            var inputFiles = comps.Descendants(WixNamespace + "File");
+            var inputFiles = comps.Descendants(argValues.WixNamespace + "File");
 
             // Get the difference between the input files and those that were 
             // just processed. That gives me the deleted files.
@@ -492,8 +483,7 @@ namespace Wintellect.Paraffin
                 if (null == attrib)
                 {
                     parentComponent.Add(new XAttribute("Transitive", "yes"));
-                    parentComponent.Add(
-                                    new XElement(WixNamespace + "Condition", "1 = 0"));
+                    parentComponent.Add(new XElement(argValues.WixNamespace + "Condition", "1 = 0"));
                 }
 
                 outDir.Add(parentComponent);
@@ -628,6 +618,9 @@ namespace Wintellect.Paraffin
         /// True if everything is cool, false if this is a multiple files
         /// per component file.
         /// </returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", 
+                                                         "CA1502:AvoidExcessiveComplexity", 
+                                                         Justification ="Want to keep this processing together for easy readability")]
         private static Boolean InitializeArgumentsFromFile(String inputXml)
         {
             XElement options = XElement.Parse(inputXml);
@@ -637,12 +630,12 @@ namespace Wintellect.Paraffin
 
             // Start the arguments from the comment section.
             argValues = new ParaffinArgParser
-                {
-                    ReportIfDifferent = originalArgs.ReportIfDifferent,
-                    PatchUpdate = originalArgs.PatchUpdate,
-                    FileName = originalArgs.FileName,
-                    PatchCreateFiles = originalArgs.PatchCreateFiles
-                };
+            {
+                ReportIfDifferent = originalArgs.ReportIfDifferent,
+                PatchUpdate = originalArgs.PatchUpdate,
+                FileName = originalArgs.FileName,
+                PatchCreateFiles = originalArgs.PatchCreateFiles
+            };
 
             // Look for the version element. If it's missing or 1, it's an old
             // file.
@@ -669,26 +662,21 @@ namespace Wintellect.Paraffin
 
                 // These options are deprecated in newer versions, but I don't
                 // want to break old files that are being updated.
-                argValues.IncrementValue = Convert.ToInt32(
-                         options.Descendants(INCREMENTELEM).First().Value,
-                                                 CultureInfo.InvariantCulture);
+                argValues.IncrementValue = Convert.ToInt32(options.Descendants(INCREMENTELEM).First().Value,
+                                                           CultureInfo.InvariantCulture);
 
-                directoryNumber = Convert.ToInt32(
-                  options.Descendants(NEXTDIRECTORYNUMELEM).First().Value,
-                                         CultureInfo.InvariantCulture);
+                directoryNumber = Convert.ToInt32(options.Descendants(NEXTDIRECTORYNUMELEM).First().Value,
+                                                  CultureInfo.InvariantCulture);
 
-                componentNumber = Convert.ToInt32(
-                   options.Descendants(NEXTCOMPONENTNUMBER).First().Value,
-                                          CultureInfo.InvariantCulture);
+                componentNumber = Convert.ToInt32(options.Descendants(NEXTCOMPONENTNUMBER).First().Value,
+                                                  CultureInfo.InvariantCulture);
 
                 // The <Custom> value was used in older versions.
-                argValues.GroupName =
-                             options.Descendants(CUSTOMELEM).First().Value;
+                argValues.GroupName = options.Descendants(CUSTOMELEM).First().Value;
             }
 
             // Get all the easy values out.
-            argValues.Alias =
-                            options.Descendants(ALIASELEM).First().Value;
+            argValues.Alias = options.Descendants(ALIASELEM).First().Value;
 
             // The old multiple files per component option is no longer 
             // supported.
@@ -703,12 +691,10 @@ namespace Wintellect.Paraffin
                 }
             }
 
-            argValues.StartDirectory =
-                        options.Descendants(DIRECTORYELEM).First().Value;
+            argValues.StartDirectory = options.Descendants(DIRECTORYELEM).First().Value;
 
-            argValues.NoRecursion = Convert.ToBoolean(
-                       options.Descendants(NORECURSELEM).First().Value,
-                                            CultureInfo.InvariantCulture);
+            argValues.NoRecursion = Convert.ToBoolean(options.Descendants(NORECURSELEM).First().Value,
+                                                      CultureInfo.InvariantCulture);
 
             var extNode = options.Descendants(EXTEXCLUDEELEM);
             foreach (var item in extNode.Descendants())
@@ -753,15 +739,9 @@ namespace Wintellect.Paraffin
             var noDirElems = options.Descendants(NODIRECTORYELEM);
             if (noDirElems.Count() == 1)
             {
-                argValues.NoRootDirectory = Convert.ToBoolean(
-                                                    noDirElems.First().Value,
-                                                 CultureInfo.InvariantCulture);
+                argValues.NoRootDirectory = Convert.ToBoolean(noDirElems.First().Value,
+                                                              CultureInfo.InvariantCulture);
                 argValues.NoRootDirectoryState = argValues.NoRootDirectory;
-            }
-            else
-            {
-                argValues.NoRootDirectory = false;
-                argValues.NoRootDirectoryState = false;
             }
 
             var diskIdValue = options.Descendants(DISKIDELEM);
@@ -770,22 +750,21 @@ namespace Wintellect.Paraffin
                 argValues.DiskId = Convert.ToInt32(diskIdValue.First().Value,
                                                   CultureInfo.InvariantCulture);
             }
-            else
-            {
-                argValues.DiskId = 1;
-            }
 
             var permanentValue = options.Descendants(PERMANENT);
             if (permanentValue.Count() == 1)
             {
 
-                argValues.Permanent = Convert.ToBoolean(
-            options.Descendants(PERMANENT).First().Value, CultureInfo.InvariantCulture);
+                argValues.Permanent = Convert.ToBoolean(options.Descendants(PERMANENT).First().Value, 
+                                                        CultureInfo.InvariantCulture);
             }
-            else
+
+            var wix4Usage = options.Descendants(WIX4);
+            if (wix4Usage.Count()==1)
             {
-                argValues.Permanent = false;
+                argValues.WiX4 = true;
             }
+
             var includeFileNode = options.Descendants(INCLUDEFILESELEM);
             foreach (var item in includeFileNode.Descendants())
             {
@@ -812,8 +791,7 @@ namespace Wintellect.Paraffin
 
             foreach (var dirExclude in originalArgs.DirectoryExcludeList)
             {
-                if (false ==
-                            argValues.DirectoryExcludeList.Contains(dirExclude))
+                if (false == argValues.DirectoryExcludeList.Contains(dirExclude))
                 {
                     argValues.DirectoryExcludeList.Add(dirExclude);
                 }
@@ -821,9 +799,7 @@ namespace Wintellect.Paraffin
 
             foreach (var regExExclude in originalArgs.RegExExcludes)
             {
-                if (false ==
-                            argValues.RegExExcludes.Any(rx =>
-                                     rx.ToString() == regExExclude.ToString()))
+                if (false == argValues.RegExExcludes.Any(rx => rx.ToString() == regExExclude.ToString()))
                 {
                     argValues.RegExExcludes.Add(regExExclude);
                 }
@@ -854,8 +830,8 @@ String outputFile)
             String inputText = File.ReadAllText(inputFile);
             String outputText = File.ReadAllText(outputFile);
             Int32 val = String.Compare(inputText,
-                                     outputText,
-                                     StringComparison.CurrentCulture);
+                                       outputText,
+                                       StringComparison.CurrentCulture);
             return val != 0;
         }
     }

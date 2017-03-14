@@ -1,6 +1,6 @@
 ﻿//------------------------------------------------------------------------------
 // <copyright file= "Main.cs" company="Wintellect">
-//    Copyright (c) 2002-2012 John Robbins/Wintellect -- All rights reserved.
+//    Copyright (c) 2002-2017 John Robbins/Wintellect -- All rights reserved.
 // </copyright>
 // <Project>
 //    Wintellect Debugging .NET Code
@@ -169,6 +169,8 @@
  *      - Finally broke down and started using Resharper so carefully started
  *        fixing any warnings reported. Not all warnings are fixed, mainly the 
  *        ones that didn't destabilize the code.
+ * 3.70 - Added support for WiX 4 fragments.
+ *      - Updated to .NET 4.6.2.
  -----------------------------------------------------------------------------*/
 namespace Wintellect.Paraffin
 {
@@ -232,14 +234,11 @@ namespace Wintellect.Paraffin
         private const String REGEXEXELEMENT = "RegExExcludes";
         private const String REGEXEXITEMELEM = "RegEx";
         private const String PERMANENT = "Permanent";
+        private const String WIX4 = "WiX4";
         #endregion
 
         // The PE file extensions.
         private static readonly String[] BinaryExtensions = { ".DLL", ".EXE", ".OCX" };
-
-        // The WiX 3.0 namespace.
-        private static readonly XNamespace WixNamespace =
-                                     "http://schemas.microsoft.com/wix/2006/wi";
 
         // The argument values used across all the methods.
         private static ParaffinArgParser argValues;
@@ -393,8 +392,8 @@ namespace Wintellect.Paraffin
                 XDocument inputMold = XDocument.Load(files[i]);
 
                 // Get the nodes hanging off the DirectoryRef node.
-                var toAddNodes = inputMold.Descendants(WixNamespace +
-                                                    "DirectoryRef").Elements();
+                var toAddNodes = inputMold.Descendants(argValues.WixNamespace +
+                                                       "DirectoryRef").Elements();
 
                 Int32 count = toAddNodes.Count();
                 Debug.Assert(count >= 1, "count >= 1");
@@ -464,7 +463,8 @@ namespace Wintellect.Paraffin
                     new XElement(NORECURSELEM, argValues.NoRecursion),
                     new XElement(NODIRECTORYELEM, argValues.NoRootDirectory),
                     new XElement(DISKIDELEM, argValues.DiskId),
-                    new XElement(PERMANENT, argValues.Permanent)
+                    new XElement(PERMANENT, argValues.Permanent),
+                    new XElement(WIX4, argValues.WiX4)
                     );
 
             // Add the file extension exclusions.
@@ -528,7 +528,7 @@ namespace Wintellect.Paraffin
 
             // Grab all the Component elements and sort them by the ID 
             // attribute.
-            var compNodes = from node in fragment.Descendants(WixNamespace + "Component")
+            var compNodes = from node in fragment.Descendants(argValues.WixNamespace + "Component")
                             select node;
 
             // In version 1 files I sorted the component elements so for old
@@ -544,13 +544,13 @@ namespace Wintellect.Paraffin
             // Ensure that all invalid characters are stripped from the ID.
             String id = RemoveInvalidIdCharacters(sb.ToString());
 
-            XElement groupNode = new XElement(WixNamespace + "ComponentGroup",
+            XElement groupNode = new XElement(argValues.WixNamespace + "ComponentGroup",
                                                 new XAttribute("Id", id));
             foreach (var component in compNodes)
             {
                 XAttribute attrib = new XAttribute("Id",
                                          component.Attribute("Id").Value);
-                XElement refNode = new XElement(WixNamespace + "ComponentRef",
+                XElement refNode = new XElement(argValues.WixNamespace + "ComponentRef",
                                                 attrib);
                 groupNode.Add(refNode);
             }
@@ -776,9 +776,9 @@ Int32 uniqueId)
             DirectoryInfo info = new DirectoryInfo(directory);
 
             // I've got enough to create the Directory node.
-            XElement directoryNode = new XElement(WixNamespace + "Directory",
-                                             new XAttribute("Id", uniqueDirId),
-                                             new XAttribute("Name", info.Name));
+            XElement directoryNode = new XElement(argValues.WixNamespace + "Directory",
+                                                  new XAttribute("Id", uniqueDirId),
+                                                  new XAttribute("Name", info.Name));
             return directoryNode;
         }
 
@@ -811,7 +811,7 @@ Int32 uniqueId)
                          g.ToString("N").ToUpper(CultureInfo.InvariantCulture));
             }
 
-            XElement file = new XElement(WixNamespace + "File",
+            XElement file = new XElement(argValues.WixNamespace + "File",
                                          new XAttribute("Id", fileId));
             if (IsPortableEExecutableFile(fileName))
             {
@@ -856,9 +856,9 @@ Int32 uniqueId)
             String guidString = Guid.NewGuid().ToString().ToUpperInvariant();
 
 
-            XElement comp = new XElement(WixNamespace + "Component",
-                                   new XAttribute("Id", componentId),
-                                   new XAttribute("Guid", guidString));
+            XElement comp = new XElement(argValues.WixNamespace + "Component",
+                                         new XAttribute("Id", componentId),
+                                         new XAttribute("Guid", guidString));
 
             if (argValues.DiskId > 1)
             {

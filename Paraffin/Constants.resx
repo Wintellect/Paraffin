@@ -185,15 +185,15 @@
   </data>
   <data name="UsageString" xml:space="preserve">
     <value>Paraffin {0}
-(c) 2007-2012, John Robbins - john@wintellect.com
-A tool for generating Windows Installer XML (WiX) 3.5/3.6 file fragments. 
+(c) 2007-2017, John Robbins - john@wintellect.com
+A tool for generating Windows Installer XML (WiX) 3.6/4.0 file fragments. 
 
 Usage:
  Paraffin (-dir &lt;dir&gt; -groupname &lt;value&gt; &lt;file&gt;
             [-alias &lt;alias&gt; -direXclude &lt;exdir&gt;* | -dirref &lt;DirectoryRef&gt; | 
              -diskId &lt;number&gt; | -ext &lt;ext&gt;* | -includeFile &lt;file&gt;* | 
              -norecurse | -regExExclude "regex"* | -norootdirectory | 
-             -verbose | -Win64 &lt;var&gt;])
+             -verbose | -Win64 &lt;var&gt; | -WiX4])
           (-update &lt;file&gt; 
            [-direXclude &lt;exdir&gt;* | -ext &lt;ext&gt;* | -RegExExclude "regex"* | 
             -ReportIfDifferent | -verbose])
@@ -253,6 +253,8 @@ Optional parameters when creating a new fragment:
                              working with x64, set this value to "true" to 
                              force it always on.
     -Permanent             - Sets Permanent="Yes" on all file elements.
+    -WiX4                  - Create fragments compatible with WiX 4, defaults to
+                             WiX 3.
 
 Required parameters to update a previously created file for major upgrades. 
 If you delete an input file, using -update will delete the Component and File

@@ -1,6 +1,6 @@
 ﻿//------------------------------------------------------------------------------
 // <copyright file= "AssemblyInfo.cs" company="Wintellect">
-//    Copyright (c) 2002-2012 John Robbins/Wintellect -- All rights reserved.
+//    Copyright (c) 2002-2017 John Robbins/Wintellect -- All rights reserved.
 // </copyright>
 // <Project>
 //    Wintellect Debugging .NET Code
@@ -22,7 +22,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Wintellect")]
 [assembly: AssemblyProduct("Paraffin")]
-[assembly: AssemblyCopyright("Copyright © John Robbins/Wintellect 2007-2012")]
+[assembly: AssemblyCopyright("Copyright © John Robbins/Wintellect 2007-2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -44,5 +44,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("3.6.2.0")]
-[assembly: AssemblyFileVersion("3.6.2.0")]
+[assembly: AssemblyVersion("3.7.0.0")]
+[assembly: AssemblyFileVersion("3.7.0.0")]
