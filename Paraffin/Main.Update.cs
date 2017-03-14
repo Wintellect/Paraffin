@@ -32,11 +32,11 @@ namespace Wintellect.Paraffin
         /// 2 - The input file does not have the special comment in the 
         /// appropriate location.
         /// </returns>
-        private static int UpdateExistingFile()
+        private static Int32 UpdateExistingFile()
         {
             verboseOut.TraceInformation(Constants.VerboseUpdateFile,
                                         argValues.FileName);
-            int returnValue = 0;
+            Int32 returnValue = 0;
 
             // Load the XML document. Any loading problems go right
             // to an exception for the user.
@@ -200,14 +200,13 @@ namespace Wintellect.Paraffin
                 var findDirectory = from elem in currInputElement.Elements()
                                     where
                           String.Compare(name,
-                                          (string)elem.Attribute("Name"),
+                                          (String)elem.Attribute("Name"),
                                           true,
                                           CultureInfo.CurrentCulture) == 0
                                     select elem;
 
                 XElement inputDirElement = null;
-
-                int fileCount = findDirectory.Count();
+                Int32 fileCount = findDirectory.Count();
                 Debug.Assert(fileCount <= 1, "fileCount <= 1");
                 if (fileCount > 1)
                 {
@@ -355,11 +354,11 @@ namespace Wintellect.Paraffin
                         var inputFileQuery = from fileNode in inputFiles
                                              where
                                String.Compare(aliasedName,
-                                       (string)fileNode.Attribute("Source"),
+                                       (String)fileNode.Attribute("Source"),
                                                true,
                                                CultureInfo.CurrentCulture) == 0
                                              select fileNode;
-                        int fileCount = inputFileQuery.Count();
+                        Int32 fileCount = inputFileQuery.Count();
                         Debug.Assert(fileCount <= 1, "fileCount <= 1");
                         if (0 == fileCount)
                         {
@@ -534,7 +533,7 @@ namespace Wintellect.Paraffin
         /// <returns>
         /// True to skip the file.
         /// </returns>
-        private static bool SkipFile(XElement compElement, string file)
+        private static Boolean SkipFile(XElement compElement, String file)
         {
             // If we're not doing transitive patch upgrades, don't skip this 
             // file.
@@ -591,7 +590,7 @@ namespace Wintellect.Paraffin
         /// <param name="compElement">
         /// The Component element to fix
         /// </param>
-        private static void FixKeyPathAttribute(string file,
+        private static void FixKeyPathAttribute(String file,
                                                 XElement fileElement,
                                                 XElement compElement)
         {
@@ -629,7 +628,7 @@ namespace Wintellect.Paraffin
         /// True if everything is cool, false if this is a multiple files
         /// per component file.
         /// </returns>
-        private static Boolean InitializeArgumentsFromFile(string inputXml)
+        private static Boolean InitializeArgumentsFromFile(String inputXml)
         {
             XElement options = XElement.Parse(inputXml);
 
@@ -845,8 +844,8 @@ namespace Wintellect.Paraffin
         /// <returns>
         /// Returns true if the files are different.
         /// </returns>
-        private static bool CheckIfDifferent(string inputFile,
-                                             string outputFile)
+        private static Boolean CheckIfDifferent(String inputFile,
+String outputFile)
         {
             // Go ahead and laugh. :) When I looked at all the work it would
             // take to keep track of differences while processing the XML, I 
@@ -854,8 +853,7 @@ namespace Wintellect.Paraffin
             // thing to do is just be simple.
             String inputText = File.ReadAllText(inputFile);
             String outputText = File.ReadAllText(outputFile);
-
-            int val = String.Compare(inputText,
+            Int32 val = String.Compare(inputText,
                                      outputText,
                                      StringComparison.CurrentCulture);
             return val != 0;

@@ -19,12 +19,11 @@ namespace Wintellect.Paraffin
     /// </summary>
     internal partial class Program
     {
-        private static int CreateZeroByteFiles()
+        private static Int32 CreateZeroByteFiles()
         {
             verboseOut.TraceInformation(Constants.VerboseCreateZeroFiles,
                                         argValues.FileName);
-
-            int returnValue = 0;
+            Int32 returnValue = 0;
 
             // Load the XML document. Any loading problems go right
             // to an exception for the user.

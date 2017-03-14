@@ -277,7 +277,7 @@ namespace Wintellect.Paraffin
         ///     of 4 indicates the input .WXS and output .PARAFFIN file are 
         ///     different.
         /// </returns>
-        internal static Int32 Main(string[] args)
+        internal static Int32 Main(String[] args)
         {
             directoryNumber = 0;
             componentNumber = 0;
@@ -351,7 +351,7 @@ namespace Wintellect.Paraffin
         /// <param name="args">
         /// Any additional items to include in the output.
         /// </param>
-        internal static void WriteError(string message, params Object[] args)
+        internal static void WriteError(String message, params Object[] args)
         {
             ColorWriteLine(ConsoleColor.Red, message, args);
         }
@@ -365,7 +365,7 @@ namespace Wintellect.Paraffin
         /// <param name="args">
         /// Any additional items to include in the output.
         /// </param>
-        private static void WriteWarning(string message, params Object[] args)
+        private static void WriteWarning(String message, params Object[] args)
         {
             ColorWriteLine(ConsoleColor.Yellow, message, args);
         }
@@ -387,7 +387,7 @@ namespace Wintellect.Paraffin
             // See if there are any mold files in this directory.
             String[] files = Directory.GetFiles(directory, "*.ParaffinMold");
 
-            for (int i = 0; i < files.Length; i++)
+            for (Int32 i = 0; i < files.Length; i++)
             {
                 // Get the contents of the file and let any problems.
                 XDocument inputMold = XDocument.Load(files[i]);
@@ -578,7 +578,7 @@ namespace Wintellect.Paraffin
         private static IEnumerable<String> ProcessedDirectoryFiles(
                                                               String directory)
         {
-            IEnumerable<String> retValue = new List<string>();
+            IEnumerable<String> retValue = new List<String>();
 
             // Get the files in this directory.
             String[] files = Directory.GetFiles(directory);
@@ -633,7 +633,7 @@ namespace Wintellect.Paraffin
         /// </returns>
         private static String CreateSeventyCharIdString(String start,
                                                         String main,
-                                                        int uniqueId)
+Int32 uniqueId)
         {
             const String FormatStr = "{0}_{1}_{2}";
             const Int32 MaxLen = 70;
@@ -646,9 +646,9 @@ namespace Wintellect.Paraffin
             if (sb.Length > MaxLen)
             {
                 sb.Length = 0;
-                int idLen = uniqueStr.Length;
-                int startLen = start.Length;
-                int len = Math.Min(main.Length, MaxLen - (idLen + startLen));
+                Int32 idLen = uniqueStr.Length;
+                Int32 startLen = start.Length;
+                Int32 len = Math.Min(main.Length, MaxLen - (idLen + startLen));
                 String sub = main.Substring(0, len);
                 sb.AppendFormat(CultureInfo.InvariantCulture, FormatStr, start, sub, uniqueStr);
             }
@@ -674,7 +674,7 @@ namespace Wintellect.Paraffin
         {
             // If the user wanted to skip some directories, check to see
             // if this happens to be one.
-            for (int i = 0; i < argValues.DirectoryExcludeList.Count; i++)
+            for (Int32 i = 0; i < argValues.DirectoryExcludeList.Count; i++)
             {
                 if (directory.Contains(argValues.DirectoryExcludeList[i]))
                 {
@@ -684,7 +684,7 @@ namespace Wintellect.Paraffin
             }
 
             // Look at the regular expressions to skip as well.
-            for (int i = 0; i < argValues.RegExExcludes.Count; i++)
+            for (Int32 i = 0; i < argValues.RegExExcludes.Count; i++)
             {
                 if (argValues.RegExExcludes[i].IsMatch(directory))
                 {
@@ -909,7 +909,7 @@ namespace Wintellect.Paraffin
             {
                 ext = ext.ToUpper(CultureInfo.CurrentCulture);
 
-                for (int i = 0; i < BinaryExtensions.Length; i++)
+                for (Int32 i = 0; i < BinaryExtensions.Length; i++)
                 {
                     if (0 == String.Compare(ext,
                                             BinaryExtensions[i],
@@ -959,13 +959,13 @@ namespace Wintellect.Paraffin
             [DllImport("shlwapi.dll",
                        CharSet = CharSet.Unicode,
                        ExactSpelling = true)]
-            internal static extern int StrCmpLogicalW(String x, String y);
+            internal static extern Int32 StrCmpLogicalW(String x, String y);
         }
 
         /// <summary>
         ///  Used to sort values in strings in logical order.
         /// </summary>
-        private class LogicalStringComparer : IComparer<String>
+        private sealed class LogicalStringComparer : IComparer<String>
         {
             /// <summary>
             /// Calls the native logical string compare method.
@@ -981,7 +981,7 @@ namespace Wintellect.Paraffin
             /// <paramref name="x"/> is greater, -1 if 
             /// <paramref name="y"/> is greater.
             /// </returns>
-            public int Compare(string x, string y)
+            public Int32 Compare(String x, String y)
             {
                 return NativeMethods.StrCmpLogicalW(x, y);
             }

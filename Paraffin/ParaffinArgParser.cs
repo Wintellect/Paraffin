@@ -22,46 +22,46 @@ namespace Wintellect.Paraffin
     internal class ParaffinArgParser : ArgParser
     {
         #region Command Line Option Constants
-        private const string ALIAS = "alias";
-        private const string ALIASSHORT = "a";
-        private const string DIR = "dir";
-        private const string DIREXCLUDE = "direXclude";
-        private const string DIREXCLUDESHORT = "x";
-        private const string DIRREF = "dirref";
-        private const string DIRREFSHORT = "dr";
-        private const string DIRSHORT = "d";
-        private const string DISKID = "diskid";
-        private const string DISKIDSHORT = "did";
-        private const string EXT = "ext";
-        private const string EXTSHORT = "e";
-        private const string GROUPNAME = "groupname";
-        private const string GROUPNAMESHORT = "gn";
-        private const string HELP = "help";
-        private const string HELPQUESTION = "?";
-        private const string HELPSHORT = "h";
-        private const string INCFILE = "includeFile";
-        private const string INCFILESHORT = "if";
-        private const string NORECURSE = "norecurse";
-        private const string NORECURSESHORT = "nr";
-        private const string NOROOTDIRECTORY = "norootdirectory";
-        private const string NOROOTDIRECTORYSHORT = "nrd";
-        private const string PATCHCREATEFILES = "PatchCreateFiles";
-        private const string PATCHCREATEFILESSHORT = "pcf";
-        private const string PATCHUPDATE = "PatchUpdate";
-        private const string PATCHUPDATESHORT = "pu";
-        private const string REGEXEXCLUDE = "regExExclude";
-        private const string REGEXEXCLUDESHORT = "rex";
-        private const string REPORTIFDIFFERENT = "ReportIfDifferent";
-        private const string REPORTIFDIFFERENTSHORT = "rid";
-        private const string UPDATE = "update";
-        private const string UPDATESHORT = "u";
-        private const string VERBOSE = "verbose";
-        private const string VERBOSESHORT = "v";
-        private const string WIN64VAR = "win64var";
-        private const string PERMANENT = "permanent";
+        private const String ALIAS = "alias";
+        private const String ALIASSHORT = "a";
+        private const String DIR = "dir";
+        private const String DIREXCLUDE = "direXclude";
+        private const String DIREXCLUDESHORT = "x";
+        private const String DIRREF = "dirref";
+        private const String DIRREFSHORT = "dr";
+        private const String DIRSHORT = "d";
+        private const String DISKID = "diskid";
+        private const String DISKIDSHORT = "did";
+        private const String EXT = "ext";
+        private const String EXTSHORT = "e";
+        private const String GROUPNAME = "groupname";
+        private const String GROUPNAMESHORT = "gn";
+        private const String HELP = "help";
+        private const String HELPQUESTION = "?";
+        private const String HELPSHORT = "h";
+        private const String INCFILE = "includeFile";
+        private const String INCFILESHORT = "if";
+        private const String NORECURSE = "norecurse";
+        private const String NORECURSESHORT = "nr";
+        private const String NOROOTDIRECTORY = "norootdirectory";
+        private const String NOROOTDIRECTORYSHORT = "nrd";
+        private const String PATCHCREATEFILES = "PatchCreateFiles";
+        private const String PATCHCREATEFILESSHORT = "pcf";
+        private const String PATCHUPDATE = "PatchUpdate";
+        private const String PATCHUPDATESHORT = "pu";
+        private const String REGEXEXCLUDE = "regExExclude";
+        private const String REGEXEXCLUDESHORT = "rex";
+        private const String REPORTIFDIFFERENT = "ReportIfDifferent";
+        private const String REPORTIFDIFFERENTSHORT = "rid";
+        private const String UPDATE = "update";
+        private const String UPDATESHORT = "u";
+        private const String VERBOSE = "verbose";
+        private const String VERBOSESHORT = "v";
+        private const String WIN64VAR = "win64var";
+        private const String PERMANENT = "permanent";
         #endregion
 
-        private const string DEFAULTDIRREF = "INSTALLDIR";
+        private const String DEFAULTDIRREF = "INSTALLDIR";
 
         // The private string to hold more detailed error information.
         private String errorMessage;
@@ -285,7 +285,7 @@ namespace Wintellect.Paraffin
         /// <param name="errorInfo">
         /// The string with the invalid command line option.
         /// </param>
-        public override void OnUsage(string errorInfo)
+        public override void OnUsage(String errorInfo)
         {
             ProcessModule exe = Process.GetCurrentProcess().Modules[0];
             Console.WriteLine(Constants.UsageString,
@@ -326,8 +326,8 @@ namespace Wintellect.Paraffin
                          "CA1502:AvoidExcessiveComplexity",
                          Justification =
               "A switch statement using strings always generates complexity.")]
-        protected override SwitchStatus OnSwitch(string switchSymbol,
-                                                 string switchValue)
+        protected override SwitchStatus OnSwitch(String switchSymbol,
+String switchValue)
         {
             SwitchStatus ss = SwitchStatus.NoError;
             switch (switchSymbol)
@@ -399,8 +399,7 @@ namespace Wintellect.Paraffin
                 case DISKIDSHORT:
                     {
                         // Only integer values are acceptable.
-                        Int32 outVal;
-                        if (false == Int32.TryParse(switchValue, out outVal))
+                        if (false == Int32.TryParse(switchValue, out Int32 outVal))
                         {
                             this.errorMessage = Constants.DiskIdMustBeInteger;
                             ss = SwitchStatus.Error;
@@ -540,7 +539,7 @@ namespace Wintellect.Paraffin
         /// <returns>
         /// One of the <see cref="ArgParser.SwitchStatus"/> values.
         /// </returns>
-        protected override SwitchStatus OnNonSwitch(string value)
+        protected override SwitchStatus OnNonSwitch(String value)
         {
             SwitchStatus ss = SwitchStatus.NoError;
             if (false == String.IsNullOrEmpty(this.FileName))
@@ -575,7 +574,7 @@ namespace Wintellect.Paraffin
             SwitchStatus ss = SwitchStatus.NoError;
 
             // The output file can never be null.
-            if (string.IsNullOrEmpty(this.FileName))
+            if (String.IsNullOrEmpty(this.FileName))
             {
                 this.errorMessage = Constants.OutputCannotBeEmpty;
                 ss = SwitchStatus.Error;
@@ -671,7 +670,7 @@ namespace Wintellect.Paraffin
         /// <returns>
         /// One of the <see cref="ArgParser.SwitchStatus"/> values.
         /// </returns>
-        private SwitchStatus ProcessGroupName(string switchValue)
+        private SwitchStatus ProcessGroupName(String switchValue)
         {
             SwitchStatus ss = SwitchStatus.NoError;
             if (false == String.IsNullOrEmpty(this.GroupName))

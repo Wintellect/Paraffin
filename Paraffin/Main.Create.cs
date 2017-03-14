@@ -26,7 +26,7 @@ namespace Wintellect.Paraffin
         /// <returns>
         /// Zero if the file was all properly written.
         /// </returns>
-        private static int CreateNewFile()
+        private static Int32 CreateNewFile()
         {
             verboseOut.TraceInformation(Constants.VerboseCreateFile,
                                         argValues.FileName);
@@ -140,7 +140,7 @@ namespace Wintellect.Paraffin
             var filesQuery = ProcessedDirectoryFiles(directory);
 
             // Only do the work if there are some files in the directory.
-            var files = filesQuery as string[] ?? filesQuery.ToArray();
+            var files = filesQuery as String[] ?? filesQuery.ToArray();
             if (!files.Any())
             {
                 return;

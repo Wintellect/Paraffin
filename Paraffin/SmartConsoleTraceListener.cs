@@ -21,7 +21,7 @@ namespace Wintellect.Paraffin
     /// want to see that information in Paraffin's output so I'll create the 
     /// custom listener to do only the main output and nothing else.
     /// </remarks>
-    internal class SmartConsoleTraceListener : ConsoleTraceListener
+    internal sealed class SmartConsoleTraceListener : ConsoleTraceListener
     {
         /// <summary>
         /// Writes trace information and the formatted array of objects to the
@@ -47,11 +47,11 @@ namespace Wintellect.Paraffin
         /// An object array containing zero or more objects to format.
         /// </param>
         public override void TraceEvent(TraceEventCache eventCache,
-                                        string source,
+                                        String source,
                                         TraceEventType eventType,
-                                        int id,
-                                        string format,
-                                        params object[] args)
+                                        Int32 id,
+                                        String format,
+                                        params Object[] args)
         {
             String info = String.Format(CultureInfo.InvariantCulture,
                                         format,
