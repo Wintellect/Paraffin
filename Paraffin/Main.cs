@@ -285,9 +285,9 @@ namespace Wintellect.Paraffin
 
             verboseOut = new TraceSource(Constants.TraceSourceName,
                                          SourceLevels.Critical)
-                {
-                    Switch = new SourceSwitch(Constants.SourceSwitchName)
-                };
+            {
+                Switch = new SourceSwitch(Constants.SourceSwitchName)
+            };
 
 #if DEBUG==false
             // In release builds there's no sense doing the OutputDebugString
@@ -393,7 +393,7 @@ namespace Wintellect.Paraffin
                 XDocument inputMold = XDocument.Load(files[i]);
 
                 // Get the nodes hanging off the DirectoryRef node.
-                var toAddNodes = inputMold.Descendants(WixNamespace + 
+                var toAddNodes = inputMold.Descendants(WixNamespace +
                                                     "DirectoryRef").Elements();
 
                 Int32 count = toAddNodes.Count();
@@ -519,11 +519,11 @@ namespace Wintellect.Paraffin
             StringBuilder sb = new StringBuilder(70);
             if (argValues.Version == Version1File)
             {
-                sb.AppendFormat("group_{0}", argValues.GroupName);
+                sb.AppendFormat(CultureInfo.InvariantCulture, "group_{0}", argValues.GroupName);
             }
             else
             {
-                sb.AppendFormat("{0}", argValues.GroupName);
+                sb.AppendFormat(CultureInfo.InvariantCulture, "{0}", argValues.GroupName);
             }
 
             // Grab all the Component elements and sort them by the ID 
@@ -642,7 +642,7 @@ namespace Wintellect.Paraffin
                                              "{0}",
                                              uniqueId);
             StringBuilder sb = new StringBuilder(100);
-            sb.AppendFormat(FormatStr, start, main, uniqueStr);
+            sb.AppendFormat(CultureInfo.InvariantCulture, FormatStr, start, main, uniqueStr);
             if (sb.Length > MaxLen)
             {
                 sb.Length = 0;
@@ -650,7 +650,7 @@ namespace Wintellect.Paraffin
                 int startLen = start.Length;
                 int len = Math.Min(main.Length, MaxLen - (idLen + startLen));
                 String sub = main.Substring(0, len);
-                sb.AppendFormat(FormatStr, start, sub, uniqueStr);
+                sb.AppendFormat(CultureInfo.InvariantCulture, FormatStr, start, sub, uniqueStr);
             }
 
             // Turns out id strings in WiX cannot have dashes in them so 
@@ -865,7 +865,7 @@ namespace Wintellect.Paraffin
                 comp.Add(new XAttribute("DiskId", argValues.DiskId));
             }
 
-            if (argValues.Permanent == true )
+            if (argValues.Permanent == true)
             {
                 comp.Add(new XAttribute("Permanent", "yes"));
             }
