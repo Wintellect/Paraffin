@@ -754,7 +754,7 @@ Int32 uniqueId)
             Guid g = Guid.NewGuid();
             String guidString = g.ToString("N").ToUpperInvariant();
             return String.Format(CultureInfo.InvariantCulture,
-                                    "dir_{0}",
+                                    "d_{0}",
                                     guidString);
         }
 
@@ -807,7 +807,7 @@ Int32 uniqueId)
             {
                 Guid g = Guid.NewGuid();
                 fileId = String.Format(CultureInfo.InvariantCulture,
-                                       "file_{0}",
+                                       "f_{0}",
                          g.ToString("N").ToUpper(CultureInfo.InvariantCulture));
             }
 
@@ -849,7 +849,7 @@ Int32 uniqueId)
             {
                 Guid g = Guid.NewGuid();
                 componentId = String.Format(CultureInfo.InvariantCulture,
-                                            "comp_{0}",
+                                            "c_{0}",
                  g.ToString("N").ToUpper(CultureInfo.InvariantCulture));
             }
 
