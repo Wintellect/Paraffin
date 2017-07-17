@@ -760,9 +760,15 @@ namespace Wintellect.Paraffin
             }
 
             var wix4Usage = options.Descendants(WIX4);
-            if (wix4Usage.Count()==1)
+            if (wix4Usage.Count() == 1)
             {
-                argValues.WiX4 = true;
+                String rawValue = wix4Usage.First().Value;
+                if (0 == String.Compare(rawValue,
+                                        "true",
+                                        StringComparison.OrdinalIgnoreCase))
+                {
+                    argValues.WiX4 = true;
+                }
             }
 
             var includeFileNode = options.Descendants(INCLUDEFILESELEM);
