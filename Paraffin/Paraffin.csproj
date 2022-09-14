@@ -52,7 +52,7 @@
     </DocumentationFile>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <CodeAnalysisRuleSet>ParaffinRuleSet.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>Paraffin.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -68,7 +68,7 @@
     </DocumentationFile>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <CodeAnalysisRuleSet>Migrated rules for Paraffin.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>Paraffin.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
@@ -110,6 +110,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Paraffin.ruleset" />
     <None Include="ParaffinRuleSet.ruleset" />
   </ItemGroup>
   <ItemGroup>
