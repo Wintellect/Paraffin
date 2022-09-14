@@ -7,12 +7,11 @@
 // </Project>
 //------------------------------------------------------------------------------
 
+using System;
+using System.Diagnostics;
+
 namespace Wintellect.Paraffin
 {
-    using System;
-    using System.Diagnostics;
-    using System.Diagnostics.CodeAnalysis;
-
     /// <summary>
     /// A command line argument parsing class.
     /// </summary>
@@ -22,9 +21,9 @@ namespace Wintellect.Paraffin
     /// <para>
     /// There are two arrays of flags you'll pass to the constructors.  The
     /// flagSymbols are supposed to be standalone switches that toggle an option
-    /// on.  The dataSymbols are for switches that take data values.  For 
-    /// example, if your application needs a switch, -c, to set the count, 
-    /// you'd put "c" in the dataSymbols.  This code will allow both "-c100" and 
+    /// on.  The dataSymbols are for switches that take data values.  For
+    /// example, if your application needs a switch, -c, to set the count,
+    /// you'd put "c" in the dataSymbols.  This code will allow both "-c100" and
     /// the usual "-c" "100" both to be passed on the command line.  Note that
     /// you can pass null/Nothing for dataSymbols if you don't need them.
     /// </para>
@@ -45,11 +44,11 @@ namespace Wintellect.Paraffin
         private readonly Boolean caseSensitiveSwitches;
 
         /// <summary>
-        /// Initializes a new instance of the ArgParser class and defaults to 
+        /// Initializes a new instance of the ArgParser class and defaults to
         /// "/" and "-" as the only valid switch characters
         /// </summary>
         /// <param name="flagSymbols">
-        /// The array of simple flags to toggle options on or off. 
+        /// The array of simple flags to toggle options on or off.
         /// </param>
         /// <param name="dataSymbols">
         /// The array of options that need data either in the next parameter or
@@ -58,11 +57,6 @@ namespace Wintellect.Paraffin
         /// <param name="caseSensitiveSwitches">
         /// True if case sensitive switches are supposed to be used.
         /// </param>
-        [SuppressMessage("Microsoft.Naming",
-                         "CA1726:UsePreferredTerms",
-                         MessageId = "flag",
-                         Justification = "Flag is appropriate term when " +
-                            "dealing with command line arguments.")]
         protected ArgParser(String[] flagSymbols,
                             String[] dataSymbols,
                             Boolean caseSensitiveSwitches)
@@ -94,11 +88,6 @@ namespace Wintellect.Paraffin
         /// Thrown if <paramref name="flagSymbols"/> or 
         /// <paramref name="switchChars"/> are invalid.
         /// </exception>
-        [SuppressMessage("Microsoft.Naming",
-                         "CA1726:UsePreferredTerms",
-                         MessageId = "flag",
-                         Justification = "Flag is appropriate term when " +
-                           "dealing with command line arguments.")]
         protected ArgParser(String[] flagSymbols,
                             String[] dataSymbols,
                             Boolean caseSensitiveSwitches,
@@ -117,7 +106,7 @@ namespace Wintellect.Paraffin
             if ((null == flagSymbols) || (0 == flagSymbols.Length))
             {
                 throw new ArgumentException(Constants.ArrayMustBeValid,
-                                            "flagSymbols");
+                                            nameof(flagSymbols));
             }
 
             Debug.Assert(null != switchChars, "null != switchChars");
@@ -133,7 +122,7 @@ namespace Wintellect.Paraffin
             if ((null == switchChars) || (0 == switchChars.Length))
             {
                 throw new ArgumentException(Constants.ArrayMustBeValid,
-                                            "switchChars");
+                                            nameof(switchChars));
             }
 
             this.flagSymbols = flagSymbols;
@@ -178,7 +167,7 @@ namespace Wintellect.Paraffin
         /// The string array to parse through.
         /// </param>
         /// <returns>
-        /// True if parsing was correct.  
+        /// True if parsing was correct.
         /// </returns>
         /// <exception cref="ArgumentException">
         /// Thrown if <paramref name="args"/> is null.
