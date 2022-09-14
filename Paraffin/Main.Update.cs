@@ -784,6 +784,19 @@ namespace Wintellect.Paraffin
                                                       RegexOptions.IgnoreCase));
             }
 
+            var perUserUsage = options.Descendants(PERUSER);
+            if (perUserUsage.Count() == 1)
+            {
+                String rawValue = perUserUsage.First().Value;
+                if (0 == String.Compare(rawValue,
+                                        "true",
+                                        StringComparison.OrdinalIgnoreCase))
+                {
+                    argValues.PerUser = true;
+                }
+            }
+
+
             // Now that everything is read out of the original options block,
             // add in any additional -ext, -dirExclude, and -regExExclude 
             // options specified on the command line.

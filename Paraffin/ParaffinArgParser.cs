@@ -271,6 +271,12 @@ namespace Wintellect.Paraffin
         }
 
         /// <summary>
+        /// Gets whether the generated file components should include a registry key
+        /// to support perUser limitedPrivileges MSIs
+        /// </summary>
+        public Boolean PerUser { get; set; }
+
+        /// <summary>
         /// Gets the namespace as this is different between WiX 3 and WiX 4.
         /// Defaults to WiX3.
         /// </summary>

@@ -236,6 +236,7 @@ namespace Wintellect.Paraffin
         private const String REGEXEXITEMELEM = "RegEx";
         private const String PERMANENT = "Permanent";
         private const String WIX4 = "WiX4";
+        private const String PERUSER = "PerUser";
         #endregion
 
         // The PE file extensions.
@@ -465,7 +466,8 @@ namespace Wintellect.Paraffin
                     new XElement(NODIRECTORYELEM, argValues.NoRootDirectory),
                     new XElement(DISKIDELEM, argValues.DiskId),
                     new XElement(PERMANENT, argValues.Permanent),
-                    new XElement(WIX4, argValues.WiX4)
+                    new XElement(WIX4, argValues.WiX4),
+                    new XElement(PERUSER, argValues.PerUser)
                     );
 
             // Add the file extension exclusions.
