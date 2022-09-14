@@ -363,9 +363,13 @@ namespace Wintellect.Paraffin
                             // file so just add it. First create a new File 
                             // element.
                             XElement fileElement = CreateFileElement(file);
-
-                            // Add the file to this component.
                             compElement.Add(fileElement);
+
+                            if (argValues.PerUser)
+                            {
+                                XElement registryValueElement = CreateRegistryValueElement(file);
+                                compElement.Add(registryValueElement);
+                            }
 
                             // Add this element to the directory.
                             addToElement.Add(compElement);

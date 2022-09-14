@@ -155,6 +155,13 @@ namespace Wintellect.Paraffin
                 // Component element.
                 XElement fileElement = CreateFileElement(file);
                 currentComponent.Add(fileElement);
+
+                if (argValues.PerUser)
+                {
+                    XElement registryValueElement = CreateRegistryValueElement(file);
+                    currentComponent.Add(registryValueElement);
+                }
+
                 directoryElem.Add(currentComponent);
                 currentComponent = CreateComponentElement();
             }
