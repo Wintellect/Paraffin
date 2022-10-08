@@ -589,7 +589,7 @@ namespace Wintellect.Paraffin
                                                 XElement compElement)
         {
             var attrib = fileElement.Attribute("KeyPath");
-            if (attrib == null)
+            if (attrib == null && !argValues.PerUser) // When PerUser, KeyPath is stored on a RegistryValue
             {
                 fileElement.Add(
                           new XAttribute("KeyPath", "yes"));
