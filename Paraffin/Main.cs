@@ -865,7 +865,7 @@ Int32 uniqueId)
             registryValue.Add(new XAttribute("Root", "HKCU"));
             registryValue.Add(new XAttribute("Key", "Software\\Tolt Technologies\\Ability Drive\\InstalledFiles"));
             registryValue.Add(new XAttribute("Name", fileId));
-//            registryValue.Add(new XAttribute("Value", fileId));
+            registryValue.Add(new XAttribute("Value", ""));
             registryValue.Add(new XAttribute("Type", "string"));
             registryValue.Add(new XAttribute("KeyPath", "yes"));
 
