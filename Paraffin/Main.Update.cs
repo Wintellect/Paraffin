@@ -363,9 +363,13 @@ namespace Wintellect.Paraffin
                             // file so just add it. First create a new File 
                             // element.
                             XElement fileElement = CreateFileElement(file);
-
-                            // Add the file to this component.
                             compElement.Add(fileElement);
+
+                            if (argValues.PerUser)
+                            {
+                                XElement registryValueElement = CreateRegistryValueElement(file);
+                                compElement.Add(registryValueElement);
+                            }
 
                             // Add this element to the directory.
                             addToElement.Add(compElement);
@@ -585,7 +589,7 @@ namespace Wintellect.Paraffin
                                                 XElement compElement)
         {
             var attrib = fileElement.Attribute("KeyPath");
-            if (attrib == null)
+            if (attrib == null && !argValues.PerUser) // When PerUser, KeyPath is stored on a RegistryValue
             {
                 fileElement.Add(
                           new XAttribute("KeyPath", "yes"));
@@ -783,6 +787,19 @@ namespace Wintellect.Paraffin
                 argValues.RegExExcludes.Add(new Regex(item.Value,
                                                       RegexOptions.IgnoreCase));
             }
+
+            var perUserUsage = options.Descendants(PERUSER);
+            if (perUserUsage.Count() == 1)
+            {
+                String rawValue = perUserUsage.First().Value;
+                if (0 == String.Compare(rawValue,
+                                        "true",
+                                        StringComparison.OrdinalIgnoreCase))
+                {
+                    argValues.PerUser = true;
+                }
+            }
+
 
             // Now that everything is read out of the original options block,
             // add in any additional -ext, -dirExclude, and -regExExclude 

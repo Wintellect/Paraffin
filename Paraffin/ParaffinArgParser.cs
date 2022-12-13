@@ -61,6 +61,7 @@ namespace Wintellect.Paraffin
         private const String WIN64VAR = "win64var";
         private const String PERMANENT = "permanent";
         private const String WIX4 = "WiX4";
+        private const String PERUSER = "perUser";
         #endregion
 
         private const String DEFAULTDIRREF = "INSTALLDIR";
@@ -104,7 +105,8 @@ namespace Wintellect.Paraffin
                             VERBOSE,
                             VERBOSESHORT,
                             PERMANENT,
-                            WIX4
+                            WIX4,
+                            PERUSER
                         },
                   new[]
                         {
@@ -147,6 +149,7 @@ namespace Wintellect.Paraffin
             this.Win64 = String.Empty;
             this.Permanent = false;
             this.WiX4 = false;
+            this.PerUser = false;
 
             this.Version = Program.CurrentFileVersion;
 
@@ -269,6 +272,12 @@ namespace Wintellect.Paraffin
                 }
             }
         }
+
+        /// <summary>
+        /// Gets whether the generated file components should include a registry key
+        /// to support perUser limitedPrivileges MSIs
+        /// </summary>
+        public Boolean PerUser { get; set; }
 
         /// <summary>
         /// Gets the namespace as this is different between WiX 3 and WiX 4.
@@ -558,6 +567,10 @@ String switchValue)
 
                 case WIX4:
                     this.WiX4 = true;
+                    break;
+
+                case PERUSER:
+                    this.PerUser = true;
                     break;
 
                 default:

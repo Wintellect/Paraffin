@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="Rules for Paraffin" Description="Code analysis rules for Paraffin.csproj." ToolsVersion="17.0">
+  <IncludeAll Action="Warning" />
+  <Rules AnalyzerId="Wintellect.Analyzers" RuleNamespace="Wintellect.Analyzers">
+    <Rule Id="Wintellect001" Action="None" />
+    <Rule Id="Wintellect002" Action="None" />
+    <Rule Id="Wintellect003" Action="None" />
+    <Rule Id="Wintellect004" Action="None" />
+    <Rule Id="Wintellect005" Action="None" />
+    <Rule Id="Wintellect006" Action="None" />
+    <Rule Id="Wintellect007" Action="None" />
+    <Rule Id="Wintellect008" Action="None" />
+    <Rule Id="Wintellect009" Action="None" />
+    <Rule Id="Wintellect010" Action="None" />
+    <Rule Id="Wintellect011" Action="None" />
+    <Rule Id="Wintellect012" Action="None" />
+    <Rule Id="Wintellect013" Action="None" />
+    <Rule Id="Wintellect014" Action="None" />
+  </Rules>
+</RuleSet>

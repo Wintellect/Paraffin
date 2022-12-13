@@ -10,6 +10,7 @@
 namespace Wintellect.Paraffin
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Xml.Linq;
@@ -86,7 +87,7 @@ namespace Wintellect.Paraffin
             // That means I'll be adding files to the <DirectoryRef> node, which
             // has been passed in the currElement. 
             XElement addToNode = currElement;
-            if (argValues.NoRootDirectoryState == false)
+            if (!argValues.NoRootDirectoryState)
             {
                 // It's new so create a Directory element.
                 XElement directoryNode = CreateDirectoryElement(directory);
@@ -109,10 +110,10 @@ namespace Wintellect.Paraffin
             AddNewFilesToDirectoryNode(directory, addToNode);
 
             // Recurse the directories if I'm supposed to do so.
-            if (false == argValues.NoRecursion)
+            if (!argValues.NoRecursion)
             {
                 String[] dirs = Directory.GetDirectories(directory);
-                foreach (var item in dirs)
+                foreach (String item in dirs)
                 {
                     Boolean skipDirectory = IsDirectoryExcluded(item);
                     if (false == skipDirectory)
@@ -137,11 +138,9 @@ namespace Wintellect.Paraffin
         private static void AddNewFilesToDirectoryNode(String directory,
                                                        XElement directoryElem)
         {
-            var filesQuery = ProcessedDirectoryFiles(directory);
-
-            // Only do the work if there are some files in the directory.
-            var files = filesQuery as String[] ?? filesQuery.ToArray();
-            if (!files.Any())
+            IEnumerable<String> filesQuery = ProcessedDirectoryFiles(directory);
+            String[] files = filesQuery as String[] ?? filesQuery.ToArray();
+            if (files.Length == 0)
             {
                 return;
             }
@@ -150,12 +149,19 @@ namespace Wintellect.Paraffin
             XElement currentComponent = CreateComponentElement();
 
             // For each file on disk.
-            foreach (var file in files)
+            foreach (String file in files)
             {
                 // Create the File element and add it to the current
                 // Component element.
                 XElement fileElement = CreateFileElement(file);
                 currentComponent.Add(fileElement);
+
+                if (argValues.PerUser)
+                {
+                    XElement registryValueElement = CreateRegistryValueElement(file);
+                    currentComponent.Add(registryValueElement);
+                }
+
                 directoryElem.Add(currentComponent);
                 currentComponent = CreateComponentElement();
             }

@@ -255,6 +255,8 @@ Optional parameters when creating a new fragment:
     -Permanent             - Sets Permanent="Yes" on all file elements.
     -WiX4                  - Create fragments compatible with WiX 4, defaults to
                              WiX 3.
+    -PerUser               - Supports Limited Privileges / Per User MSI by adding
+                             a Registry Value Key Path to each File's Component.
 
 Required parameters to update a previously created file for major upgrades. 
 If you delete an input file, using -update will delete the Component and File

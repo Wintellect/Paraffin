@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Wintellect.Paraffin</RootNamespace>
     <AssemblyName>Paraffin</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>
@@ -52,7 +52,7 @@
     </DocumentationFile>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <CodeAnalysisRuleSet>ParaffinRuleSet.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>Paraffin.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -68,7 +68,7 @@
     </DocumentationFile>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <CodeAnalysisRuleSet>Migrated rules for Paraffin.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>Paraffin.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
@@ -108,7 +108,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Paraffin.ruleset" />
     <None Include="ParaffinRuleSet.ruleset" />
   </ItemGroup>
   <ItemGroup>

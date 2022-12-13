@@ -236,6 +236,7 @@ namespace Wintellect.Paraffin
         private const String REGEXEXITEMELEM = "RegEx";
         private const String PERMANENT = "Permanent";
         private const String WIX4 = "WiX4";
+        private const String PERUSER = "PerUser";
         #endregion
 
         // The PE file extensions.
@@ -465,7 +466,8 @@ namespace Wintellect.Paraffin
                     new XElement(NODIRECTORYELEM, argValues.NoRootDirectory),
                     new XElement(DISKIDELEM, argValues.DiskId),
                     new XElement(PERMANENT, argValues.Permanent),
-                    new XElement(WIX4, argValues.WiX4)
+                    new XElement(WIX4, argValues.WiX4),
+                    new XElement(PERUSER, argValues.PerUser)
                     );
 
             // Add the file extension exclusions.
@@ -819,11 +821,55 @@ Int32 uniqueId)
                 file.Add(new XAttribute("Checksum", "yes"));
             }
 
-            file.Add(new XAttribute("KeyPath", "yes"));
+            if (!argValues.PerUser)
+            {
+                file.Add(new XAttribute("KeyPath", "yes"));
+            }
 
             fileName = AliasedFilename(fileName);
             file.Add(new XAttribute("Source", fileName));
             return file;
+        }
+
+        /// <summary>
+        /// Creates a RegistryValue element for the file in <paramref name="fileName"/>.
+        /// This is to facilitate LimitedPrivilige/PerUser MSI creation
+        /// </summary>
+        /// <param name="fileName">
+        /// The full filename to process.
+        /// </param>
+        /// <returns>
+        /// A valid <see cref="XElement"/> for the RegistryValue element.
+        /// </returns>
+        private static XElement CreateRegistryValueElement(String fileName)
+        {
+            String fileId;
+            if (argValues.Version == Version1File)
+            {
+                // Create a unique filename. In a one file per component run, 
+                // this will mean that the file and it's parent component will 
+                // have the same number.
+                fileId = CreateSeventyCharIdString("file",
+                                                   argValues.GroupName,
+                                                   componentNumber - 1);
+            }
+            else
+            {
+                Guid g = Guid.NewGuid();
+                fileId = String.Format(CultureInfo.InvariantCulture,
+                                       "file_{0}",
+                         g.ToString("N").ToUpper(CultureInfo.InvariantCulture));
+            }
+
+            XElement registryValue = new XElement(argValues.WixNamespace + "RegistryValue");
+            registryValue.Add(new XAttribute("Root", "HKCU"));
+            registryValue.Add(new XAttribute("Key", "Software\\Tolt Technologies\\Ability Drive\\InstalledFiles"));
+            registryValue.Add(new XAttribute("Name", fileId));
+            registryValue.Add(new XAttribute("Value", ""));
+            registryValue.Add(new XAttribute("Type", "string"));
+            registryValue.Add(new XAttribute("KeyPath", "yes"));
+
+            return registryValue;
         }
 
         /// <summary>
